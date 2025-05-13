@@ -13,5 +13,3 @@ var photoSchema = new Schema({
 });
 
 module.exports = mongoose.model('photo', photoSchema);
-
-//gps, pospeskometer, nadmorska visina, 
