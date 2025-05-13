@@ -14,7 +14,6 @@ function Photos(){
 
     return(
         <div>
-            <h3>Photos:</h3>
             <ul>
                 {photos.map(photo=>(<Photo photo={photo} key={photo._id}></Photo>))}
             </ul>

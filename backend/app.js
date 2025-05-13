@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var http = require('http'); // Dodano za ustvarjanje HTTP strežnika
+var socketIo = require('socket.io'); // Dodano za Socket.IO
 
 // vključimo mongoose in ga povežemo z MongoDB
 var mongoose = require('mongoose');
@@ -17,8 +19,21 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/userRoutes');
 var photosRouter = require('./routes/photoRoutes');
 var friendsRouter = require('./routes/friendsRoutes');
+var chatRouter = require('./routes/chatRoutes');
+var workoutRouter = require('./routes/workoutRoutes');
+
+// Uvozimo model za sporočila
+var Message = require('./models/chatModel');
 
 var app = express();
+var server = http.createServer(app); // Ustvarimo HTTP strežnik
+var io = socketIo(server, {
+  cors: {
+    origin: ['http://localhost:3000'], // Dovoli povezave s frontend aplikacije
+    methods: ['GET', 'POST'],
+    credentials: true,
+  },
+});
 
 var cors = require('cors');
 var allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
@@ -69,6 +84,49 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/photos', photosRouter);
 app.use('/friends', friendsRouter);
+app.use('/chat', chatRouter);
+app.use('/workouts', workoutRouter)
+
+// Dodamo Socket.IO instanco v Express app, da jo lahko uporabljajo kontrolerji
+app.set('io', io);
+
+// Socket.IO logika
+io.on('connection', (socket) => {
+  console.log('Uporabnik povezan:', socket.id);
+
+  // Poslušaj, ko se uporabnik pridruži chatu
+  socket.on('joinChat', (chatId) => {
+    socket.join(chatId);
+    console.log(`Uporabnik se je pridružil chatu: ${chatId}`);
+  });
+
+  // Poslušaj sporočila
+  socket.on('sendMessage', async (data) => {
+    console.log('Novo sporočilo:', data);
+
+    try {
+      // Shrani sporočilo v bazo
+      const newMessage = new Message({
+        content: data.content,
+        sentAt: new Date(),
+        sentBy: data.sentBy, // Prepričaj se, da frontend pošilja ID uporabnika
+        belongsTo: data.chatId,
+      });
+
+      await newMessage.save();
+
+      // Pošlji sporočilo vsem uporabnikom v istem chatu
+      io.to(data.chatId).emit('receiveMessage', newMessage);
+    } catch (err) {
+      console.error('Napaka pri shranjevanju sporočila:', err);
+    }
+  });
+
+  // Poslušaj odklop
+  socket.on('disconnect', () => {
+    console.log('Uporabnik odklopljen:', socket.id);
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -83,8 +141,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  //res.render('error');
   res.json(err);
 });
 
-module.exports = app;
+module.exports = { app, server }; // Izvozi tako app kot server

@@ -11,6 +11,10 @@ import AddPhoto from "./components/AddPhoto";
 import AddFriend from './components/AddFriend';
 import FriendRequests from './components/FriendRequests';
 import Friends from './components/Friends';
+import ChatLogs from './components/ChatLogs';
+import ChatMessages from './components/ChatMessages';
+import AddWorkout from './components/AddWorkout';
+import WorkoutDetails from './components/WorkoutDetails';
 
 
 function App() {
@@ -51,7 +55,7 @@ function App() {
         <div className="App">
           <Header title="My application"></Header>
           <Routes>
-            <Route path="/" exact element={<Photos />}></Route>
+            <Route path="/" ></Route>
             <Route path="/login" exact element={<Login />}></Route>
             <Route path="/register" element={<Register />}></Route>
             <Route path="/publish" element={<AddPhoto />}></Route>
@@ -60,6 +64,10 @@ function App() {
             <Route path="/addFriend" element={<AddFriend />}></Route>
             <Route path="/friendRequests" element={<FriendRequests />}></Route>
             <Route path="/friends" element={<Friends />}></Route>
+            <Route path="/chatlogs" element={<ChatLogs />}></Route>
+            <Route path="/messages/:chatId" element={<ChatMessages />} />
+            <Route path="/workouts" element={<AddWorkout />} />
+            <Route path="/workouts/view/:workoutId" element={<WorkoutDetails />} />
           </Routes>
         </div>
       </UserContext.Provider>
