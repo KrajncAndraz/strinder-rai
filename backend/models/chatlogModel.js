@@ -6,7 +6,7 @@ var chatlogSchema = new Schema({
 	'createdAt' : Date,
 	'participants' : [{
 	 	type: Schema.Types.ObjectId,
-	 	ref: 'user'
+	 	ref: 'user' 
 	}]
 });
 
