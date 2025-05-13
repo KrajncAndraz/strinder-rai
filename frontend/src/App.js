@@ -8,6 +8,10 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import Logout from "./components/Logout";
 import AddPhoto from "./components/AddPhoto";
+import AddFriend from './components/AddFriend';
+import FriendRequests from './components/FriendRequests';
+import Friends from './components/Friends';
+
 
 function App() {
   /**
@@ -53,6 +57,9 @@ function App() {
             <Route path="/publish" element={<AddPhoto />}></Route>
             <Route path="/profile" element={<Profile />}></Route>
             <Route path="/logout" element={<Logout />}></Route>
+            <Route path="/addFriend" element={<AddFriend />}></Route>
+            <Route path="/friendRequests" element={<FriendRequests />}></Route>
+            <Route path="/friends" element={<Friends />}></Route>
           </Routes>
         </div>
       </UserContext.Provider>
