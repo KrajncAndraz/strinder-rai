@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import WorkoutMap from './WorkoutMap';
+
 
 function WorkoutDetails() {
     const { workoutId } = useParams(); // Pridobi ID workouta iz URL-ja
@@ -98,7 +100,7 @@ function WorkoutDetails() {
     }
 
     return (
-        <div>
+        <div style={{ margin: '5%' }}>
             <h2>Podrobnosti Workouta</h2>
             <p>
                 <strong>Ime:</strong> {workout.name}
@@ -111,7 +113,7 @@ function WorkoutDetails() {
             </p>
 
             <h3>Trackerji</h3>
-            <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+            <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px', width: '80%', marginLeft: '10%' }}>
                 <ul>
                     {workout.trackers.map((tracker) => (
                         <li key={tracker._id}>
@@ -150,6 +152,8 @@ function WorkoutDetails() {
                 </div>
                 <button type="submit">Dodaj Tracker</button>
             </form>
+
+            <WorkoutMap trackers={workout.trackers} />
         </div>
     );
 }
