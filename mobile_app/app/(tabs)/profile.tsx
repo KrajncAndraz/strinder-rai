@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
 import axios from 'axios';
 
-const BASE_URL = 'http://10.0.2.2:3001/users'; // Replace <YOUR_IP> with your local machine IP
+const BASE_URL = 'http://10.0.2.2:3001/users'; 
 
 export default function Profile() {
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Register
