@@ -21,6 +21,7 @@ var photosRouter = require('./routes/photoRoutes');
 var friendsRouter = require('./routes/friendsRoutes');
 var chatRouter = require('./routes/chatRoutes');
 var workoutRouter = require('./routes/workoutRoutes');
+var testRoutes = require('./routes/testRoutes');
 
 // Uvozimo model za sporočila
 var Message = require('./models/chatModel');
@@ -29,14 +30,14 @@ var app = express();
 var server = http.createServer(app); // Ustvarimo HTTP strežnik
 var io = socketIo(server, {
   cors: {
-    origin: ['http://localhost:3000'], // Dovoli povezave s frontend aplikacije
+    origin: ['http://localhost:3000', 'http://localhost:19006', 'http://10.0.2.2:3000'], // Dovoli povezave s frontend aplikacije
     methods: ['GET', 'POST'],
     credentials: true,
   },
 });
 
 var cors = require('cors');
-var allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+var allowedOrigins = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:19006'];
 app.use(cors({
   credentials: true,
   origin: function(origin, callback){
@@ -86,6 +87,7 @@ app.use('/photos', photosRouter);
 app.use('/friends', friendsRouter);
 app.use('/chat', chatRouter);
 app.use('/workouts', workoutRouter)
+app.use('/test', testRoutes);
 
 // Dodamo Socket.IO instanco v Express app, da jo lahko uporabljajo kontrolerji
 app.set('io', io);
