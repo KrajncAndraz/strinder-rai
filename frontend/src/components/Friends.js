@@ -21,14 +21,14 @@ function Friends() {
     }, []);
 
     if (loading) {
-        return <p>Nalaganje...</p>;
+        return <p>Loading...</p>;
     }
 
     return (
         <div>
-            <h2>Seznam prijateljev</h2>
+            <h2>Friends list</h2>
             {friends.length === 0 ? (
-                <p>Trenutno nimate prijateljev.</p>
+                <p>You currently have no friends.</p>
             ) : (
                 <ul>
                     {friends.map(friend => (

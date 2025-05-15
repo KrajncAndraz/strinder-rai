@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react';
 import { UserContext } from '../userContext';
 import { Navigate } from 'react-router-dom';
+import '../styles/Form.css';
 
 function Login(){
     const [username, setUsername] = useState("");

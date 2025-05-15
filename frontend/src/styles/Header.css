@@ -1,0 +1,26 @@
+.header-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    margin: 0;
+    padding: 1rem 2rem;
+    background-color: #2C2C2C;
+    display: flex;
+    gap: 5.9rem;
+}
+
+    .header-container a {
+        font-size: 24px;
+        text-decoration: none;
+        color: #C3C3C3;
+        background-color: #2C2C2C00;
+        transition: transform 0.2s, all 0.2s;
+    }
+        .header-container a:hover {
+            text-decoration: none;
+            color: #FFFFFF;
+            background-color: #2C2C2C00;
+            transform: scale(1.17);
+        }

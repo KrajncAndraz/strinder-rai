@@ -12,7 +12,7 @@ function AddPhoto(props) {
         e.preventDefault();
 
         if(!name){
-            alert("Vnesite ime!");
+            alert("Enter name!");
             return;
         }
 
@@ -30,13 +30,13 @@ function AddPhoto(props) {
     }
 
     return (
-        <form className="form-group" onSubmit={onSubmit}>
+        <form onSubmit={onSubmit}>
             {!userContext.user ? <Navigate replace to="/login" /> : ""}
             {uploaded ? <Navigate replace to="/" /> : ""}
-            <input type="text" className="form-control" name="ime" placeholder="Ime slike" value={name} onChange={(e)=>{setName(e.target.value)}}/>
-            <label>Izberi sliko</label>
+            <input type="text" name="ime" placeholder="Image Name" value={name} onChange={(e)=>{setName(e.target.value)}}/>
+            <label>Choose image</label>
             <input type="file" id="file" onChange={(e)=>{setFile(e.target.files[0])}}/>
-            <input className="btn btn-primary" type="submit" name="submit" value="Naloži" />
+            <input type="submit" name="submit" value="Upload" />
         </form>
     )
 }

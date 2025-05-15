@@ -20,8 +20,8 @@ function AddWorkout() {
                 const data = await res.json();
                 setWorkouts(data);
             } catch (err) {
-                console.error('Napaka pri pridobivanju workoutov:', err);
-                setError('Napaka pri pridobivanju workoutov.');
+                console.error('Error fetching workouts:', err);
+                setError('Error fetching workouts.');
             }
         }
 
@@ -51,7 +51,7 @@ function AddWorkout() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                setError(errorData.error || 'Napaka pri dodajanju workouta.');
+                setError(errorData.error || 'Error adding workout.');
                 return;
             }
 
@@ -63,53 +63,53 @@ function AddWorkout() {
             // Posodobi seznam workoutov
             setWorkouts((prevWorkouts) => [...prevWorkouts, data.workout]);
         } catch (err) {
-            console.error('Napaka pri dodajanju workouta:', err);
-            setError('Napaka pri dodajanju workouta.');
+            console.error('Error adding workout:', err);
+            setError('Error adding workout.');
         }
     }
 
     return (
         <div>
-            <h2>Dodaj Workout</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Ime:</label>
-                    <input
-                        type="text"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Opis:</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Dodaj Workout</button>
+            <h2>Add Workout</h2>
+            <form class="fullW" onSubmit={handleSubmit}>
+                <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    required
+                    placeholder="Name"
+                />
+                <textarea
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    required
+                    placeholder="Description"
+                    onInput={e => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = e.target.scrollHeight + 'px';
+                    }}
+                />
+                <button type="submit">Add Workout</button>
             </form>
             {message && <p style={{ color: 'green' }}>{message}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
 
-            <h2>Seznam Workoutov</h2>
-            <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+            <h2>Workout list</h2>
+            <div>
                 <ul>
                     {workouts.map((workout) => (
                         <li key={workout._id}>
                             <p>
-                                <strong>Ime:</strong> {workout.name}
+                                <strong>Name:</strong> {workout.name}
                             </p>
                             <p>
-                                <strong>Opis:</strong> {workout.description}
+                                <strong>Description:</strong> {workout.description}
                             </p>
                             <p>
-                                <strong>Začetni čas:</strong> {new Date(workout.startTime).toLocaleString()}
+                                <strong>Start time:</strong> {new Date(workout.startTime).toLocaleString()}
                             </p>
                             <button onClick={() => navigate(`/workouts/view/${workout._id}`)}>
-                                Poglej Workout
+                                Check Workout
                             </button>
                             <hr />
                         </li>

@@ -18,15 +18,15 @@ function WorkoutDetails() {
 
                 if (!res.ok) {
                     const errorData = await res.json();
-                    setError(errorData.error || 'Napaka pri pridobivanju workouta.');
+                    setError(errorData.error || 'Error fetching workout.');
                     return;
                 }
 
                 const data = await res.json();
                 setWorkout(data);
             } catch (err) {
-                console.error('Napaka pri pridobivanju workouta:', err);
-                setError('Napaka pri pridobivanju workouta.');
+                console.error('Error fetching workout:', err);
+                setError('Error fetching workout.');
             }
         }
 
@@ -54,7 +54,7 @@ function WorkoutDetails() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                setError(errorData.error || 'Napaka pri dodajanju trackerja.');
+                setError(errorData.error || 'Error adding tracker.');
                 return;
             }
 
@@ -63,8 +63,8 @@ function WorkoutDetails() {
             setLat('');
             setLong('');
         } catch (err) {
-            console.error('Napaka pri dodajanju trackerja:', err);
-            setError('Napaka pri dodajanju trackerja.');
+            console.error('Error adding tracker:', err);
+            setError('Error adding tracker.');
         }
     }
 
@@ -77,15 +77,15 @@ function WorkoutDetails() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                setError(errorData.error || 'Napaka pri brisanju trackerja.');
+                setError(errorData.error || 'Error deleting tracker.');
                 return;
             }
 
             const updatedWorkout = await res.json();
             setWorkout(updatedWorkout); // Posodobi workout brez izbrisanega trackerja
         } catch (err) {
-            console.error('Napaka pri brisanju trackerja:', err);
-            setError('Napaka pri brisanju trackerja.');
+            console.error('Error deleting tracker:', err);
+            setError('Error deleting tracker.');
         }
     }
 
@@ -94,24 +94,24 @@ function WorkoutDetails() {
     }
 
     if (!workout) {
-        return <p>Nalaganje podrobnosti workouta...</p>;
+        return <p>Loading workout details...</p>;
     }
 
     return (
         <div>
-            <h2>Podrobnosti Workouta</h2>
+            <h2>Workout details</h2>
             <p>
-                <strong>Ime:</strong> {workout.name}
+                <strong>Name:</strong> {workout.name}
             </p>
             <p>
-                <strong>Opis:</strong> {workout.description}
+                <strong>Description:</strong> {workout.description}
             </p>
             <p>
-                <strong>Začetni čas:</strong> {new Date(workout.startTime).toLocaleString()}
+                <strong>Started at:</strong> {new Date(workout.startTime).toLocaleString()}
             </p>
 
-            <h3>Trackerji</h3>
-            <div style={{ maxHeight: '200px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+            <h3>Trackers</h3>
+            <div>
                 <ul>
                     {workout.trackers.map((tracker) => (
                         <li key={tracker._id}>
@@ -119,7 +119,7 @@ function WorkoutDetails() {
                                 <strong>Lat:</strong> {tracker.lat}, <strong>Long:</strong> {tracker.long}
                             </p>
                             <p>
-                                <strong>Čas:</strong> {new Date(tracker.pingTime).toLocaleString()}
+                                <strong>Time:</strong> {new Date(tracker.pingTime).toLocaleString()}
                             </p>
                             <button onClick={() => handleDeleteTracker(tracker._id)}>Izbriši</button>
                             <hr />
@@ -128,7 +128,7 @@ function WorkoutDetails() {
                 </ul>
             </div>
 
-            <h3>Dodaj Tracker</h3>
+            <h3>Add Tracker</h3>
             <form onSubmit={handleAddTracker}>
                 <div>
                     <label>Lat:</label>
@@ -148,7 +148,7 @@ function WorkoutDetails() {
                         required
                     />
                 </div>
-                <button type="submit">Dodaj Tracker</button>
+                <button type="submit">Add Tracker</button>
             </form>
         </div>
     );

@@ -48,7 +48,7 @@ function ChatLogs() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                setError(errorData.error || 'Napaka pri dodajanju chata.');
+                setError(errorData.error || 'Error adding chat.');
                 return;
             }
 
@@ -57,40 +57,40 @@ function ChatLogs() {
             setNewChatUsername('');
         } catch (err) {
             console.error('Error adding chat:', err);
-            setError('Napaka pri dodajanju chata.');
+            setError('Error adding chat.');
         }
     }
 
     if (loading) {
-        return <p>Nalaganje...</p>;
+        return <p>Loading...</p>;
     }
 
     return (
         <div>
-            <h2>Seznam Chatov</h2>
+            <h2>Chat List</h2>
             {chatLogs.length === 0 ? (
-                <p>Trenutno nimate nobenih chatov. Dodajte novega!</p>
+                <p>You currently have no chats. Add a new one!</p>
             ) : (
                 <ul>
                     {chatLogs.map(chat => (
                         <li key={chat._id}>
                             <p>{chat.name}</p>
-                            <button onClick={() => navigate(`/messages/${chat._id}`)}>Poglej sporočila</button>
+                            <button onClick={() => navigate(`/messages/${chat._id}`)}>Check messages</button>
                         </li>
                     ))}
                 </ul>
             )}
 
-            <h3>Dodaj nov chat</h3>
+            <h3>Add new chat</h3>
             <form onSubmit={handleAddChat}>
                 <input
                     type="text"
-                    placeholder="Uporabniško ime"
+                    placeholder="Username"
                     value={newChatUsername}
                     onChange={(e) => setNewChatUsername(e.target.value)}
                     required
                 />
-                <button type="submit">Dodaj</button>
+                <button type="submit">Add</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>

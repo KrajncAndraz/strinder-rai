@@ -1,6 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
+import { UserContext } from "../userContext";
+import '../styles/Messages.css';
 
 const socket = io('http://localhost:3001'); // Poveži se s strežnikom
 
@@ -11,6 +13,8 @@ function ChatMessages() {
     const [newMessage, setNewMessage] = useState('');
     const [error, setError] = useState('');
     const messagesEndRef = useRef(null); // Ref za auto-scroll
+
+    const user = useContext(UserContext);
 
     useEffect(() => {
         // Pridruži se chatu
@@ -75,7 +79,7 @@ function ChatMessages() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                setError(errorData.error || 'Napaka pri pošiljanju sporočila.');
+                setError(errorData.error || 'Error sending message.');
                 return;
             }
 
@@ -88,44 +92,50 @@ function ChatMessages() {
             setNewMessage('');
         } catch (err) {
             console.error('Error sending message:', err);
-            setError('Napaka pri pošiljanju sporočila.');
+            setError('Error sending message.');
         }
     }
 
-    if (loading) {
-        return <p>Nalaganje...</p>;
+    if (loading || !user) {
+        return <p>Loading...</p>;
     }
 
     return (
         <div>
             <h2>Sporočila</h2>
             {/* Scrollable box za sporočila */}
-            <div style={{ maxHeight: '300px', overflowY: 'auto', border: '1px solid #ccc', padding: '10px' }}>
-                <ul>
-                    {messages.map((message, index) => (
-                        <li key={index}>
-                            <p style={{ fontSize: '0.8em', color: 'gray' }}>
-                                Poslano ob: {new Date(message.sentAt).toLocaleString()}
-                            </p>
-                            <p>
-                                <strong>{message.sentBy?.username || 'Neznan uporabnik'}:</strong> {message.content}
-                            </p>
-                            <hr />
-                        </li>
-                    ))}
+            <div>
+                <ul ClassName="messages">
+                    {messages.map((message, index) => {
+                        var isOwner = message.sentBy?.username === user?.username;
+                        return (
+                            <li key={index} className={`${isOwner ? 'own-message' : 'message'}`}>
+                                <p>
+                                    <strong>{message.sentBy?.username || 'Unknown user'}:</strong> {message.content} {user?.username || 'idk'}
+                                </p>
+                                <p id="time">
+                                    Sent at: {new Date(message.sentAt).toLocaleString()}
+                                </p>
+                            </li>
+                        );
+                    })}
                     <div ref={messagesEndRef} /> {/* Ref za auto-scroll */}
                 </ul>
             </div>
 
-            <form onSubmit={handleSendMessage}>
-                <input
+            <form class="fullW" onSubmit={handleSendMessage}>
+                <textarea
                     type="text"
-                    placeholder="Vnesite sporočilo"
+                    placeholder="Enter message"
                     value={newMessage}
                     onChange={(e) => setNewMessage(e.target.value)}
                     required
+                    onInput={e => {
+                        e.target.style.height = 'auto';
+                        e.target.style.height = e.target.scrollHeight + 'px';
+                    }}
                 />
-                <button type="submit">Pošlji</button>
+                <button type="submit">Send</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>

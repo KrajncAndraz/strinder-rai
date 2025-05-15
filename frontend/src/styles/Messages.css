@@ -1,0 +1,41 @@
+.messages {
+    display: flex;
+    flex-direction: column;
+}
+
+.message {
+    list-style: none;
+    border: solid 2px #C3C3C3;
+    border-radius: 15px;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    width: fit-content;
+    align-self: flex-start;
+}
+
+.own-message {
+    list-style: none;
+    border: solid 2px #C3C3C3;
+    border-radius: 15px;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    width: fit-content;
+    margin-left: auto;
+    background-color: #4C4C4C;
+    color: #C8C8C8;
+    align-self: flex-end;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+    background-color: #00000000;
+}
+
+#time {
+    font-size: 0.8rem;
+}
+
+strong {
+    background-color: #00000000;
+}
