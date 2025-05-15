@@ -14,7 +14,7 @@ function ChatMessages() {
     const [error, setError] = useState('');
     const messagesEndRef = useRef(null); // Ref za auto-scroll
 
-    const user = useContext(UserContext);
+    const { user } = useContext(UserContext);
 
     useEffect(() => {
         // Pridruži se chatu
@@ -111,7 +111,7 @@ function ChatMessages() {
                         return (
                             <li key={index} className={`${isOwner ? 'own-message' : 'message'}`}>
                                 <p>
-                                    <strong>{message.sentBy?.username || 'Unknown user'}:</strong> {message.content} {user?.username || 'idk'}
+                                    <strong>{message.sentBy?.username || 'Unknown user'}:</strong> {message.content}
                                 </p>
                                 <p id="time">
                                     Sent at: {new Date(message.sentAt).toLocaleString()}

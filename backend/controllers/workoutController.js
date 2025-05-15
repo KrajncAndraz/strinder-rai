@@ -23,10 +23,10 @@ module.exports = {
             const populatedWorkout = await newWorkout.populate('createdBy', 'username');
 
             // Pošlji shranjen workout nazaj kot odgovor
-            res.status(201).json({ message: 'Workout uspešno dodan!', workout: populatedWorkout });
+            res.status(201).json({ message: 'Workout added successfully!', workout: populatedWorkout });
         } catch (err) {
-            console.error('Napaka pri dodajanju workouta:', err);
-            res.status(500).json({ error: 'Napaka pri dodajanju workouta.' });
+            console.error('Error adding workout:', err);
+            res.status(500).json({ error: 'Error adding workout.' });
         }
     },
 
@@ -41,8 +41,8 @@ module.exports = {
 
             res.status(200).json(workouts || []); // Če ni workoutov, vrni prazen array
         } catch (err) {
-            console.error('Napaka pri pridobivanju workoutov:', err);
-            res.status(500).json({ error: 'Napaka pri pridobivanju workoutov.', workouts: [] });
+            console.error('Error fetching workout:', err);
+            res.status(500).json({ error: 'Error fetching workout.', workouts: [] });
         }
     },
 
@@ -59,8 +59,8 @@ module.exports = {
 
             res.status(200).json(workouts || []); // Če ni workoutov, vrni prazen array
         } catch (err) {
-            console.error('Napaka pri pridobivanju workoutov uporabnika:', err);
-            res.status(500).json({ error: 'Napaka pri pridobivanju workoutov uporabnika.', workouts: [] });
+            console.error("Error fetching user's workouts:", err);
+            res.status(500).json({ error: "Error fetching user's workouts.", workouts: [] });
         }
     },
 
@@ -71,13 +71,13 @@ module.exports = {
             const workout = await Workout.findById(workoutId);
 
             if (!workout) {
-                return res.status(404).json({ error: 'Workout ne obstaja.' });
+                return res.status(404).json({ error: 'Workout does not exist.' });
             }
 
             res.status(200).json(workout);
         } catch (err) {
-            console.error('Napaka pri pridobivanju workouta:', err);
-            res.status(500).json({ error: 'Napaka pri pridobivanju workouta.' });
+            console.error('Error fetching workout:', err);
+            res.status(500).json({ error: 'Error fetching workout.' });
         }
     },
 
@@ -88,7 +88,7 @@ module.exports = {
 
             const workout = await Workout.findById(workoutId);
             if (!workout) {
-                return res.status(404).json({ error: 'Workout ne obstaja.' });
+                return res.status(404).json({ error: 'Workout does not exist.' });
             }
 
             workout.trackers.push({ lat, long, pingTime });
@@ -96,8 +96,8 @@ module.exports = {
 
             res.status(200).json(workout);
         } catch (err) {
-            console.error('Napaka pri dodajanju trackerja:', err);
-            res.status(500).json({ error: 'Napaka pri dodajanju trackerja.' });
+            console.error('Error adding tracker:', err);
+            res.status(500).json({ error: 'Error adding tracker.' });
         }
     },
 
@@ -108,7 +108,7 @@ module.exports = {
 
             const workout = await Workout.findById(workoutId);
             if (!workout) {
-                return res.status(404).json({ error: 'Workout ne obstaja.' });
+                return res.status(404).json({ error: 'Workout does not exist.' });
             }
 
             workout.trackers = workout.trackers.filter((tracker) => tracker._id.toString() !== trackerId);
@@ -116,8 +116,8 @@ module.exports = {
 
             res.status(200).json(workout);
         } catch (err) {
-            console.error('Napaka pri brisanju trackerja:', err);
-            res.status(500).json({ error: 'Napaka pri brisanju trackerja.' });
+            console.error('Error deleting tracker:', err);
+            res.status(500).json({ error: 'Error deleting tracker.' });
         }
     },
 };

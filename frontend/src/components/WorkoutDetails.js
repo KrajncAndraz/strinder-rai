@@ -110,6 +110,7 @@ function WorkoutDetails() {
                 <strong>Started at:</strong> {new Date(workout.startTime).toLocaleString()}
             </p>
 
+            <br />
             <h3>Trackers</h3>
             <div>
                 <ul>
@@ -121,31 +122,32 @@ function WorkoutDetails() {
                             <p>
                                 <strong>Time:</strong> {new Date(tracker.pingTime).toLocaleString()}
                             </p>
-                            <button onClick={() => handleDeleteTracker(tracker._id)}>Izbriši</button>
+                            <button onClick={() => handleDeleteTracker(tracker._id)}>Delete</button>
                             <hr />
                         </li>
                     ))}
                 </ul>
             </div>
 
-            <h3>Add Tracker</h3>
+            <br />
+            <h3 className="centered">Add Tracker</h3>
             <form onSubmit={handleAddTracker}>
                 <div>
-                    <label>Lat:</label>
                     <input
                         type="text"
                         value={lat}
                         onChange={(e) => setLat(e.target.value)}
                         required
+                        placeholder="Latitude"
                     />
                 </div>
                 <div>
-                    <label>Long:</label>
                     <input
                         type="text"
                         value={long}
                         onChange={(e) => setLong(e.target.value)}
                         required
+                        placeholder="Longitude"
                     />
                 </div>
                 <button type="submit">Add Tracker</button>

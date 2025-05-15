@@ -26,6 +26,7 @@ input {
     padding: 0.5rem;
     border: solid 2px #C3C3C3;
     border-radius: 15px;
+    width: 100%;
 }
 
     button, input[type="submit"] {
@@ -35,6 +36,7 @@ input {
         border: solid 2px #C3C3C3;
         border-radius: 15px;
         padding: 0.5rem;
+        margin-top: 1rem;
         transition: background-color 0.5s, color 0.5s;
     }
 
@@ -47,6 +49,19 @@ input {
         padding: 0.5rem;
     }
 
+.request {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: baseline;
+    gap: 0.5rem;
+    max-width: 25%;
+    border: solid 2px #C3C3C3;
+    border-radius: 15px;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+}
+
 #accept {
     background-color: #3B5D3B;
 }
@@ -57,9 +72,12 @@ input {
 
 #reject {
     background-color: #5D3B3B;
-    margin-left: 1rem;
 }
 
     #reject:hover {
         background-color: #7D4B4B;
     }
+
+.centered {
+    text-align: center;
+}

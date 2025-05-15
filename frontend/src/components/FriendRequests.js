@@ -62,7 +62,7 @@ function FriendRequests() {
             ) : (
                 <ul>
                     {requests.map(request => (
-                        <li key={request._id}>
+                        <li key={request._id} className="request">
                             <p>
                                 Request from: {request.friend1.username}
                             </p>

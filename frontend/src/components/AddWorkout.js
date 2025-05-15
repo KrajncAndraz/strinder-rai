@@ -109,7 +109,7 @@ function AddWorkout() {
                                 <strong>Start time:</strong> {new Date(workout.startTime).toLocaleString()}
                             </p>
                             <button onClick={() => navigate(`/workouts/view/${workout._id}`)}>
-                                Check Workout
+                                Inspect Workout
                             </button>
                             <hr />
                         </li>
