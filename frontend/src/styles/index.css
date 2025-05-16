@@ -1,12 +1,37 @@
+:root {
+    --color-background-primary: #3C3C3C;
+    --color-background-secondary: #333;
+    --color-background-terciary: #1C1C1C;
+    --color-background-accent: #FF69B455;
+    --color-background-accent-hover: #FF69B488;
+
+    --color-background-accept: #66FF6688;
+    --color-background-accept-hover: #66FF66AA;
+    --color-background-reject: #FF666688;
+    --color-background-reject-hover: #FF6666AA;
+    /**/
+    --color-text-primary: #C3C3C3;
+    --color-text-primary-hover: #FFFFFF;
+    --color-text-secondary: #A3A3A3;
+    --color-text-accent: #FF69B4;
+    /**/
+    --color-transparent: #00000000;
+}
+
 * {
-    background-color: #3C3C3C;
-    color: #C3C3C3;
+    background-color: var(--color-background-primary);
+    color: var(--color-text-primary);
+}
+
+html, body, #root {
+    height: 100%;
+    min-height: 100vh;
 }
 
 body {
     margin: 0;
     padding: 6rem 2rem;
-    background-color: #3C3C3C;
+    background-color: var(--color-background-primary);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

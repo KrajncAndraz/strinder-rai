@@ -1,34 +1,43 @@
+.messages-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+}
+
 .messages {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding-bottom: 13rem;
     display: flex;
     flex-direction: column;
 }
 
-.message {
-    border: solid 2px #C3C3C3;
+.message, .own-message {
+    border: solid 2px var(--color-text-primary);
     border-radius: 15px;
-    margin: 0.5rem 0;
+    margin: 0.5rem 15rem;
     padding: 0.5rem;
     width: fit-content;
     align-self: flex-start;
+    background-color: var(--color-background-secondary);
+    max-width: 50%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: pre-line;
 }
 
 .own-message {
-    list-style: none;
-    border: solid 2px #C3C3C3;
-    border-radius: 15px;
-    margin: 0.5rem 0;
-    padding: 0.5rem;
-    width: fit-content;
     margin-left: auto;
-    background-color: #4C4C4C;
-    color: #C8C8C8;
+    background-color: var(--color-background-accent);
+    color: var(--color-text-primary);
     align-self: flex-end;
 }
 
 p {
     margin: 0;
     padding: 0;
-    background-color: #00000000;
+    background-color: var(--color-transparent);
 }
 
 #time {
@@ -36,5 +45,5 @@ p {
 }
 
 strong {
-    background-color: #00000000;
+    background-color: var(--color-transparent);
 }

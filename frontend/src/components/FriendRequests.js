@@ -60,18 +60,20 @@ function FriendRequests() {
             {requests.length === 0 ? (
                 <p>No new friend requests.</p>
             ) : (
-                <ul>
+                <ul className="w100">
                     {requests.map(request => (
                         <li key={request._id} className="request">
                             <p>
                                 Request from: {request.friend1.username}
                             </p>
-                            <button id="accept" onClick={() => acceptRequest(request._id)}>
-                                Accpet
-                            </button>
-                            <button id="reject" onClick={() => declineRequest(request._id)}>
-                                Reject
-                            </button>
+                            <div className="request-actions">
+                                <button id="accept" onClick={() => acceptRequest(request._id)}>
+                                    Accpet
+                                </button>
+                                <button id="reject" onClick={() => declineRequest(request._id)}>
+                                    Reject
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>

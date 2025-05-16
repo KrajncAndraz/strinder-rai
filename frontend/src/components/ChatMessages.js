@@ -101,11 +101,11 @@ function ChatMessages() {
     }
 
     return (
-        <div>
+        <div className="messages-container">
             <h2>Sporočila</h2>
             {/* Scrollable box za sporočila */}
             <div>
-                <ul ClassName="messages">
+                <ul className="messages">
                     {messages.map((message, index) => {
                         var isOwner = message.sentBy?.username === user?.username;
                         return (
@@ -123,7 +123,7 @@ function ChatMessages() {
                 </ul>
             </div>
 
-            <form class="fullW" onSubmit={handleSendMessage}>
+            <form class="message-input" onSubmit={handleSendMessage}>
                 <textarea
                     type="text"
                     placeholder="Enter message"

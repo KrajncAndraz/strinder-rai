@@ -5,22 +5,24 @@
     width: 100%;
     z-index: 1000;
     margin: 0;
-    padding: 1rem 2rem;
-    background-color: #2C2C2C;
+    padding: 1rem 0.5rem;
+    background-color: var(--color-background-terciary);
     display: flex;
-    gap: 5.7rem;
+    justify-content: space-around;
+    box-shadow: 0 5px 20px var(--color-background-terciary);
 }
 
     .header-container a {
         font-size: 24px;
         text-decoration: none;
-        color: #C3C3C3;
-        background-color: #2C2C2C00;
-        transition: transform 0.2s, all 0.2s;
+        color: var(--color-text-accent);
+        background-color: var(--transparent);
+        transition: transform 0.2s, ease-in-out 0.2s;
     }
         .header-container a:hover {
             text-decoration: none;
-            color: #FFFFFF;
-            background-color: #2C2C2C00;
+            color: var(--color-text-accent);
+            background-color: var(--transparent);
             transform: scale(1.17);
+            text-shadow: 0 0 20px var(--color-text-accent);
         }

@@ -71,17 +71,17 @@ function ChatLogs() {
             {chatLogs.length === 0 ? (
                 <p>You currently have no chats. Add a new one!</p>
             ) : (
-                <ul>
+                    <ul className="w100">
                     {chatLogs.map(chat => (
-                        <li key={chat._id}>
-                            <button onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
+                        <li className="w100" key={chat._id}>
+                            <button className="w100" onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
                         </li>
                     ))}
                 </ul>
             )}
 
             <br />
-            <h3>Add new chat</h3>
+            <h3 className="centered">Add new chat</h3>
             <form onSubmit={handleAddChat}>
                 <input
                     type="text"
