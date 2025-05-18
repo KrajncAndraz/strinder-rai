@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import WorkoutMap from './WorkoutMap';
 
-
 function WorkoutDetails() {
-    const { workoutId } = useParams(); // Pridobi ID workouta iz URL-ja
+    const { workoutId } = useParams(); //geta ID workouta iz url-ja
     const [workout, setWorkout] = useState(null);
     const [error, setError] = useState('');
     const [lat, setLat] = useState('');
