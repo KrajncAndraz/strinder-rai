@@ -32,7 +32,7 @@ function FriendRequests() {
             setRequests(requests.filter(request => request._id !== requestId));
         } else {
             const errorData = await res.json();
-            alert(`Napaka: ${errorData.message}`);
+            alert(`Error: ${errorData.message}`);
         }
     }
 
@@ -46,38 +46,34 @@ function FriendRequests() {
             setRequests(requests.filter(request => request._id !== requestId));
         } else {
             const errorData = await res.json();
-            alert(`Napaka: ${errorData.message}`);
+            alert(`Error: ${errorData.message}`);
         }
     }
 
     if (loading) {
-        return <p>Nalaganje...</p>;
+        return <p>Loading...</p>;
     }
 
     return (
         <div>
-            <h2>Zahteve za prijateljstvo</h2>
+            <h2>Friend requests</h2>
             {requests.length === 0 ? (
-                <p>Ni novih zahtev za prijateljstvo.</p>
+                <p>No new friend requests.</p>
             ) : (
-                <ul>
+                <ul className="w100">
                     {requests.map(request => (
-                        <li key={request._id}>
+                        <li key={request._id} className="request">
                             <p>
-                                Zahteva od: {request.friend1.username}
+                                Request from: {request.friend1.username}
                             </p>
-                            <button
-                                className="btn btn-success"
-                                onClick={() => acceptRequest(request._id)}
-                            >
-                                Sprejmi
-                            </button>
-                            <button
-                                className="btn btn-danger"
-                                onClick={() => declineRequest(request._id)}
-                            >
-                                Zavrniti
-                            </button>
+                            <div className="request-actions">
+                                <button id="accept" onClick={() => acceptRequest(request._id)}>
+                                    Accpet
+                                </button>
+                                <button id="reject" onClick={() => declineRequest(request._id)}>
+                                    Reject
+                                </button>
+                            </div>
                         </li>
                     ))}
                 </ul>
