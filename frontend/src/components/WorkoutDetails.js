@@ -99,7 +99,7 @@ function WorkoutDetails() {
     }
 
     return (
-        <div>
+        <div className="workout-details">
             <h2>Workout details</h2>
             <p>
                 <strong>Name:</strong> {workout.name}
