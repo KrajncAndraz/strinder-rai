@@ -11,7 +11,7 @@ function AddFriend(props) {
         e.preventDefault();
 
         if (!username) {
-            alert("Vnesite uporabniško ime!");
+            alert("Enter a username!");
             return;
         }
 
@@ -28,7 +28,7 @@ function AddFriend(props) {
             setRequestSent(true);
         } else {
             const errorData = await res.json();
-            alert(`Napaka: ${errorData.message}`);
+            alert(`Error: ${errorData.message}`);
         }
     }
 
@@ -38,17 +38,15 @@ function AddFriend(props) {
             {requestSent ? <Navigate replace to="/" /> : ""}
             <input
                 type="text"
-                className="form-control"
                 name="username"
-                placeholder="Uporabniško ime"
+                placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
             />
             <input
-                className="btn btn-primary"
                 type="submit"
                 name="submit"
-                value="Dodaj prijatelja"
+                value="Send Friend Request"
             />
         </form>
     );

@@ -1,37 +1,35 @@
 import { useContext } from "react";
 import { UserContext } from "../userContext";
 import { Link } from "react-router-dom";
+import '../styles/Header.css';
 
 function Header(props) {
     return (
         <header>
-            <h1>{props.title}</h1>
-            <nav>
-                <ul>
-                    <li><Link to='/'>Home</Link></li>
-                    <UserContext.Consumer>
-                        {context => (
-                            context.user ?
-                                <>
-                                    <li><Link to='/profile'>Profile</Link></li>
-                                    <li><Link to='/friends'>Friends</Link></li>
-                                    <li><Link to='/addFriend'>Add Friend</Link></li>
-                                    <li><Link to='/friendRequests'>Friend Requests</Link></li>
-                                    <li><Link to='/chatlogs'>Chat logs</Link></li>
-                                    <li><Link to='/workouts'>Workouts</Link></li>
-                                    <li><Link to='/logout'>Logout</Link></li>
-                                </>
+            <div className="header-container">
+                <Link to='/'>Home</Link>
+                <UserContext.Consumer>
+                    {context => (
+                        context.user ?
+                            <>
+                                <Link to='/profile'>Profile</Link>
+                                <Link to='/friends'>Friends</Link>
+                                <Link to='/addFriend'>Add Friend</Link>
+                                <Link to='/friendRequests'>Friend Requests</Link>
+                                <Link to='/chatlogs'>Chat logs</Link>
+                                <Link to='/workouts'>Workouts</Link>
+                                <Link to='/logout'>Logout</Link>
+                            </>
                             :
-                                <>
-                                    <li><Link to='/login'>Login</Link></li>
-                                    <li><Link to='/register'>Register</Link></li>
-                                </>
+                            <>
+                                <Link to='/login'>Login</Link>
+                                <Link to='/register'>Register</Link>
+                            </>
 
-                        )}
-                    </UserContext.Consumer>
-                </ul>
-            </nav>
-        </header >
+                    )}
+                </UserContext.Consumer>
+            </div>
+        </header>
     );
 }
 

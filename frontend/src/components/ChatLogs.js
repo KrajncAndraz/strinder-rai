@@ -48,7 +48,7 @@ function ChatLogs() {
 
             if (!res.ok) {
                 const errorData = await res.json();
-                setError(errorData.error || 'Napaka pri dodajanju chata.');
+                setError(errorData.error || 'Error adding chat.');
                 return;
             }
 
@@ -57,40 +57,40 @@ function ChatLogs() {
             setNewChatUsername('');
         } catch (err) {
             console.error('Error adding chat:', err);
-            setError('Napaka pri dodajanju chata.');
+            setError('Error adding chat.');
         }
     }
 
     if (loading) {
-        return <p>Nalaganje...</p>;
+        return <p>Loading...</p>;
     }
 
     return (
         <div>
-            <h2>Seznam Chatov</h2>
+            <h2>Chat List</h2>
             {chatLogs.length === 0 ? (
-                <p>Trenutno nimate nobenih chatov. Dodajte novega!</p>
+                <p>You currently have no chats. Add a new one!</p>
             ) : (
-                <ul>
+                <ul className="w100">
                     {chatLogs.map(chat => (
-                        <li key={chat._id}>
-                            <p>{chat.name}</p>
-                            <button onClick={() => navigate(`/messages/${chat._id}`)}>Poglej sporočila</button>
+                        <li className="w100" key={chat._id}>
+                            <button className="w100" onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
                         </li>
                     ))}
                 </ul>
             )}
 
-            <h3>Dodaj nov chat</h3>
+            <br />
+            <h3 className="centered">Add new chat</h3>
             <form onSubmit={handleAddChat}>
                 <input
                     type="text"
-                    placeholder="Uporabniško ime"
+                    placeholder="Username"
                     value={newChatUsername}
                     onChange={(e) => setNewChatUsername(e.target.value)}
                     required
                 />
-                <button type="submit">Dodaj</button>
+                <button type="submit">Add</button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
