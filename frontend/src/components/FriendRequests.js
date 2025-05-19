@@ -68,7 +68,7 @@ function FriendRequests() {
                             </p>
                             <div className="request-actions">
                                 <button id="accept" onClick={() => acceptRequest(request._id)}>
-                                    Accpet
+                                    Accept
                                 </button>
                                 <button id="reject" onClick={() => declineRequest(request._id)}>
                                     Reject

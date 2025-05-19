@@ -20,13 +20,13 @@ function WorkoutMap({ trackers }) {
     const positions = trackers.map((tracker) => [parseFloat(tracker.lat), parseFloat(tracker.long)]);
     
     return (
-        <div className="map">
+        <div className="map" style={{ width: '75%', paddingLeft: '22%' }}>
             <MapContainer center={positions[0] || [0, 0]} zoom={12}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                {positions.length > 1 && <Polyline positions={positions} color="#FF69B4" />}
+                {positions.length > 1 && <Polyline positions={positions} color="#0000FF" />}
                 <MapAutoCenter positions={positions} />
             </MapContainer>
         </div>
