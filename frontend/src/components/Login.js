@@ -6,6 +6,7 @@ import '../styles/Form.css';
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [use2FA, setUse2FA] = useState(false);
     const [error, setError] = useState("");
     const userContext = useContext(UserContext);
 
@@ -17,7 +18,8 @@ function Login() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 username: username,
-                password: password
+                password: password,
+                use2FA: use2FA
             })
         });
         const data = await res.json();
@@ -37,6 +39,15 @@ function Login() {
                 value={username} onChange={(e) => (setUsername(e.target.value))} />
             <input type="password" name="password" placeholder="Password"
                 value={password} onChange={(e) => (setPassword(e.target.value))} />
+            <div style={{ display: 'flex', alignItems: 'center', margin: '8px 0' }}>
+                <input
+                    type="checkbox"
+                    id="use2FA"
+                    checked={use2FA}
+                    onChange={(e) => setUse2FA(e.target.checked)}
+                />
+                <label htmlFor="use2FA" style={{ marginLeft: '8px' }}>Use 2FA for this login</label>
+            </div>
             <input type="submit" name="submit" value="Log in" />
             <label>{error}</label>
         </form>

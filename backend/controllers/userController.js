@@ -142,8 +142,18 @@ module.exports = {
             }
             req.session.userId = user._id;
             req.session.username = req.body.username;
-            //res.redirect('/users/profile');
-            return res.json(user);
+            
+            if (typeof req.body.use2FA !== "undefined") {
+                user['2faInProgress'] = !!req.body.use2FA;
+                user.save(function(saveErr) {
+                    if (saveErr) {
+                        return res.status(500).json({ message: 'Error updating 2FA state', error: saveErr });
+                    }
+                    return res.json(user);
+                });
+            } else {
+                return res.json(user);
+            }
         });
     },
 
@@ -176,5 +186,89 @@ module.exports = {
                 }
             });
         }
+    },
+
+    faceSetup: function (req, res) {
+        var userId = req.params.id;
+        var images = req.body.images;
+
+        if (!images || !Array.isArray(images) || images.length !== 5) {
+            return res.status(400).json({ message: 'You must provide exactly 5 images.' });
+        }
+
+        fetch('http://localhost:5000/setup-face', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: userId, images: images }),
+        })
+        .then(function(flaskRes) {
+            return flaskRes.json().then(function(flaskData) {
+                if (flaskRes.ok && flaskData.success) {
+                    UserModel.findOne({ _id: userId }, function(err, user) {
+                    if (err) {
+                        return res.status(500).json({ message: 'Error finding user', error: err });
+                    }
+                    if (!user) {
+                        return res.status(404).json({ message: 'User not found' });
+                    }
+
+                    user.has2FA = true;
+
+                    user.save(function(err, savedUser) {
+                        if (err) {
+                            return res.status(500).json({ message: 'Error updating user', error: err });
+                        }
+                        return res.json({ message: '2FA face setup successful', user: savedUser });
+                    });
+                });
+                } else {
+                    return res.status(500).json({ message: flaskData.message || 'Flask server error' });
+                }
+            });
+        })
+        .catch(function(err) {
+            console.error('Error contacting Flask server:', err);
+            return res.status(500).json({ message: 'Internal server error', error: err });
+        });
+    },
+    check2FA: function(req, res) {
+        const userId = req.params.id;
+        UserModel.findById(userId, (err, user) => {
+            if (err || !user) return res.status(404).json({ twoFAInProgress: false });
+            return res.json({ twoFAInProgress: user['2faInProgress'] });
+        });
+    },
+    verify2FA: function(req, res) {
+        const userId = req.params.id;
+        const { image } = req.body;
+        if (!image) {
+            return res.status(400).json({ message: 'You must provide 1 image.' });
+        }
+
+        fetch('http://localhost:5000/verify-face', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId, image }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                UserModel.findById(userId, (err, user) => {
+                    if (err || !user) return res.status(404).json({ message: 'User not found' });
+                    user['2faInProgress'] = false;
+                    user.save(err => {
+                        if (err) return res.status(500).json({ message: 'Error saving user', error: err });
+                        return res.json({ message: '2FA verification successful', user });
+                    });
+                });
+            } else {
+                return res.status(400).json({ message: data.message || 'Face verification failed' });
+            }
+        })
+        .catch(err => {
+            console.error('Error verifying face:', err);
+            return res.status(500).json({ message: 'Internal server error', error: err });
+        });
     }
+
 };

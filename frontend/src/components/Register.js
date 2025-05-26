@@ -20,6 +20,7 @@ function Register() {
         });
         const data = await res.json();
         if (data._id !== undefined) {
+            window.alert("Registration successful! Please use the mobile app to set up 2FA.");
             window.location.href = "/";
         }
         else {
