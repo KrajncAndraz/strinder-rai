@@ -18,7 +18,8 @@ router.put('/:id', userController.update);
 router.delete('/:id', userController.remove);
 
 router.post('/:id/set-2fa', userController.faceSetup);
-router.post('/:id/push-token', userController.savePushToken);
+router.get('/:id/check-2fa', userController.check2FA);
+router.post('/:id/verify-2fa', userController.verify2FA);
 
 
 module.exports = router;

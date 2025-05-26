@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
 import axios from 'axios';
-import { useRouter } from 'expo-router';
-import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
+import { useRouter, useLocalSearchParams } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const router = useRouter();
 
 const BASE_URL = 'http://10.0.2.2:3001/users'; 
@@ -14,11 +13,13 @@ export default function Profile() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState<any>(null);
+  const { userId } = useLocalSearchParams<{ userId: string }>();
 
   const handleLogin = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/login`, { username, password }, { withCredentials: true });
       const loggedInUser = res.data;
+      await AsyncStorage.setItem('userId', loggedInUser._id);
       setUser(loggedInUser);
       if (!loggedInUser.has2FA) {
         router.push({
@@ -51,33 +52,23 @@ export default function Profile() {
       Alert.alert('Logout failed');
     }
   };
-  async function registerPushToken(userId: string) {
-    if (!Constants.isDevice) {
-      Alert.alert('Error', 'Push notifications only work on physical devices.');
-      return;
+  const check2FAStatus = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('userId');
+      if (!userId) {
+        Alert.alert('Error', 'User ID not found');
+        return;
+      }
+      const res = await axios.get(`${BASE_URL}/${userId}/check-2fa`);
+      if (res.data.twoFAInProgress) {
+        router.push({ pathname: '/setup/verify', params: { userId } });
+      } else {
+        Alert.alert('No 2FA in progress');
+      }
+    } catch (error) {
+      Alert.alert('Failed to check 2FA status');
     }
-
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-
-    if (finalStatus !== 'granted') {
-      Alert.alert('Error', 'Failed to get push notification permissions!');
-      return;
-    }
-
-    const token = (await Notifications.getExpoPushTokenAsync()).data;
-
-    // Send the token to your backend
-    await axios.post(`${BASE_URL}/savePushToken`, {
-      userId,
-      token,
-    });
-  }
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -127,6 +118,7 @@ export default function Profile() {
           <Text style={styles.title}>Welcome, {user.username}!</Text>
           <Text>Email: {user.email}</Text>
           <Button title="Logout" onPress={handleLogout} />
+          <Button title="Check 2FA" onPress={check2FAStatus} />
         </View>
       )}
     </ScrollView>
