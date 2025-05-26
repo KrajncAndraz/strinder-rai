@@ -1,5 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { UserContext } from '../userContext';
+import '../styles/Friends.css';
 
 function Friends() {
     const userContext = useContext(UserContext);
@@ -21,23 +22,25 @@ function Friends() {
     }, []);
 
     if (loading) {
-        return <p>Nalaganje...</p>;
+        return <p>Loading...</p>;
     }
 
     return (
         <div>
-            <h2>Seznam prijateljev</h2>
+            <h2>Friends List</h2>
             {friends.length === 0 ? (
-                <p>Trenutno nimate prijateljev.</p>
+                <p>You currently have no friends.</p>
             ) : (
                 <ul>
                     {friends.map(friend => (
-                        <li key={friend._id}>
+                        <li className="friend" key={friend._id}>
+                            <img src="Profile-Default.svg" alt="Profile"></img>
                             <p>
                                 {friend.friend1._id === userContext.user._id
                                     ? friend.friend2.username
                                     : friend.friend1.username}
                             </p>
+                            <button>Message</button>
                         </li>
                     ))}
                 </ul>
