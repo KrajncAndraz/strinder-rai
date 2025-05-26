@@ -176,5 +176,64 @@ module.exports = {
                 }
             });
         }
+    },
+
+    faceSetup: function (req, res) {
+        var userId = req.params.id;
+        var images = req.body.images;
+
+        if (!images || !Array.isArray(images) || images.length !== 5) {
+            return res.status(400).json({ message: 'You must provide exactly 5 images.' });
+        }
+
+        fetch('http://localhost:5000/verify-face', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: userId, images: images }),
+        })
+        .then(function(flaskRes) {
+            return flaskRes.json().then(function(flaskData) {
+                if (flaskRes.ok && flaskData.success) {
+                    UserModel.findOne({ _id: userId }, function(err, user) {
+                    if (err) {
+                        return res.status(500).json({ message: 'Error finding user', error: err });
+                    }
+                    if (!user) {
+                        return res.status(404).json({ message: 'User not found' });
+                    }
+
+                    user.has2FA = true;
+
+                    user.save(function(err, savedUser) {
+                        if (err) {
+                            return res.status(500).json({ message: 'Error updating user', error: err });
+                        }
+                        return res.json({ message: '2FA face setup successful', user: savedUser });
+                    });
+                });
+                } else {
+                    return res.status(500).json({ message: flaskData.message || 'Flask server error' });
+                }
+            });
+        })
+        .catch(function(err) {
+            console.error('Error contacting Flask server:', err);
+            return res.status(500).json({ message: 'Internal server error', error: err });
+        });
+    },
+    
+    savePushToken: function (req, res) {
+        var userId = req.params.id;
+        var pushToken = req.body.pushToken;
+
+        UserModel.findOne({ _id: userId }, function (err, user) {
+            if (err || !user) return res.status(400).json({ message: 'User not found' });
+
+            user.pushToken = pushToken;
+            user.save(function (err) {
+            if (err) return res.status(500).json({ message: 'Error saving push token' });
+            return res.status(200).json({ message: 'Push token saved' });
+            });
+        });
     }
 };

@@ -5,11 +5,16 @@ var Schema   = mongoose.Schema;
 var userSchema = new Schema({
 	'username' : { type: String, unique: true, required: true },
 	'password' : String,
-	'email' : String
+	'email' : String, 
+	'has2FA': { type: Boolean, default: false },
+	'pushToken': { type: String }
 });
 
 userSchema.pre('save', function(next){
 	var user = this;
+
+	if (!user.isModified('password')) return next();
+
 	bcrypt.hash(user.password, 10, function(err, hash){
 		if(err){
 			return next(err);

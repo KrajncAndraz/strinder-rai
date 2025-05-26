@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 'react-native';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+const router = useRouter();
 
 const BASE_URL = 'http://10.0.2.2:3001/users'; 
 
@@ -14,7 +18,14 @@ export default function Profile() {
   const handleLogin = async () => {
     try {
       const res = await axios.post(`${BASE_URL}/login`, { username, password }, { withCredentials: true });
-      setUser(res.data);
+      const loggedInUser = res.data;
+      setUser(loggedInUser);
+      if (!loggedInUser.has2FA) {
+        router.push({
+          pathname: '/setup/face',
+          params: { userId: loggedInUser._id }
+        });
+      }
     } catch (error: any) {
       console.log(error.response?.data || error.message);
       Alert.alert('Login failed', error.response?.data?.message || 'Check credentials');
@@ -40,6 +51,33 @@ export default function Profile() {
       Alert.alert('Logout failed');
     }
   };
+  async function registerPushToken(userId: string) {
+    if (!Constants.isDevice) {
+      Alert.alert('Error', 'Push notifications only work on physical devices.');
+      return;
+    }
+
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+
+    if (finalStatus !== 'granted') {
+      Alert.alert('Error', 'Failed to get push notification permissions!');
+      return;
+    }
+
+    const token = (await Notifications.getExpoPushTokenAsync()).data;
+
+    // Send the token to your backend
+    await axios.post(`${BASE_URL}/savePushToken`, {
+      userId,
+      token,
+    });
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
