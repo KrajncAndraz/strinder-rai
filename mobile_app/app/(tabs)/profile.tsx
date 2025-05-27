@@ -3,9 +3,10 @@ import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 're
 import axios from 'axios';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BASE_URL } from '../../constants/ip'; 
 const router = useRouter();
 
-const BASE_URL = 'http://10.0.2.2:3001/users'; 
+const URL = '${BASE_URL}/users';
 
 export default function Profile() {
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Register
@@ -17,7 +18,7 @@ export default function Profile() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${BASE_URL}/login`, { username, password }, { withCredentials: true });
+      const res = await axios.post(`${URL}/login`, { username, password }, { withCredentials: true });
       const loggedInUser = res.data;
       await AsyncStorage.setItem('userId', loggedInUser._id);
       setUser(loggedInUser);

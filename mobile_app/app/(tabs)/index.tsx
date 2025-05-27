@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-
+import { BASE_URL } from '../../constants/ip'; 
 const TestConnection: React.FC = () => {
   const [response, setResponse] = useState<string>('No response yet');
 
   const testBackendConnection = async () => {
     try {
-      const res = await fetch('http://10.0.2.2:3001/test/ping'); 
+      const res = await fetch(`${BASE_URL}/test/ping`);
       const text = await res.text();
       setResponse(text);
     } catch (error) {
