@@ -1,85 +1,132 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, Image, StyleSheet, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, Image, StyleSheet, Alert, ScrollView } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as VideoThumbnails from 'expo-video-thumbnails';
+import * as Video from 'expo-av';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 
 export default function FaceSetupScreen() {
-  const [images, setImages] = useState<string[]>([]);
-  const [permissionStatus, requestPermission] = ImagePicker.useMediaLibraryPermissions();
+  const [videoUri, setVideoUri] = useState<string | null>(null);
+  const [frames, setFrames] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { userId } = useLocalSearchParams<{ userId: string }>();
 
-  useEffect(() => {
-    if (!permissionStatus?.granted) {
-      requestPermission();
+  const recordVideo = async () => {
+    const permission = await ImagePicker.requestCameraPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert('Camera permission required');
+      return;
     }
-  }, []);
-
-  const pickImage = async () => {
-    if (images.length >= 5) return;
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      base64: true,
+    const result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
       quality: 0.7,
     });
-
-    if (!result.canceled && result.assets?.[0].base64) {
-      setImages([...images, result.assets[0].base64]);
+    if (!result.canceled && result.assets?.[0].uri) {
+      setVideoUri(result.assets[0].uri);
+      extractFrames(result.assets[0].uri);
     }
   };
 
-  const submitImages = async () => {
+  const extractFrames = async (uri: string) => {
+    setLoading(true);
+    try {
+      // Get video duration using expo-av
+      const { sound, status } = await Video.Audio.Sound.createAsync({ uri });
+      let duration = 5; // fallback to 5s if duration not available
+      if (status.isLoaded && 'durationMillis' in status && typeof status.durationMillis === 'number') {
+        duration = status.durationMillis / 1000;
+      }
+      await sound.unloadAsync();
+      const fps = 3;
+      const frameTimes: number[] = [];
+      for (let t = 0; t < duration; t += 1 / fps) {
+        frameTimes.push(t * 1000); // milliseconds
+      }
+      const extractedFrames: string[] = [];
+      for (const time of frameTimes) {
+        const { uri: frameUri } = await VideoThumbnails.getThumbnailAsync(uri, { time });
+        // Convert frameUri to base64
+        const base64 = await uriToBase64(frameUri);
+        extractedFrames.push(base64);
+      }
+      setFrames(extractedFrames);
+    } catch (e) {
+      Alert.alert('Error extracting frames');
+    }
+    setLoading(false);
+  };
+
+  // Helper to convert image uri to base64
+  const uriToBase64 = async (uri: string) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    return await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = (reader.result as string).split(',')[1];
+        resolve(base64data);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  };
+
+  const submitFrames = async () => {
+    if (frames.length === 0) {
+      Alert.alert('No frames to submit');
+      return;
+    }
+    setLoading(true);
     try {
       const response = await fetch(`http://10.0.2.2:3001/users/${userId}/set-2fa`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ images }),
+        body: JSON.stringify({ images: frames }),
       });
       const data = await response.json();
       if (response.ok) {
         Alert.alert('Success', '2FA setup completed');
         router.replace('/');
       } else {
-        console.warn('Backend error:', data);
-        Alert.alert('Error', data.message || 'Failed to submit images');
+        Alert.alert('Error', data.message || 'Failed to submit frames');
       }
     } catch (err) {
-      console.error(err);
       Alert.alert('Network error');
     }
+    setLoading(false);
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Select 5 face images:</Text>
-      <View style={styles.previewContainer}>
-        {images.map((base64, idx) => (
-          <Image
-            key={idx}
-            source={{ uri: `data:image/jpeg;base64,${base64}` }}
-            style={styles.image}
-          />
-        ))}
-      </View>
-
-      <Button
-        title={`Pick Image (${images.length}/5)`}
-        onPress={pickImage}
-        disabled={images.length >= 5}
-      />
-
-      {images.length === 5 && (
-        <Button title="Submit Photos" onPress={submitImages} color="green" />
+    <ScrollView contentContainerStyle={styles.container}>
+      <Text>Record a video for face setup:</Text>
+      <Button title="Record Video" onPress={recordVideo} />
+      {frames.length > 0 && (
+        <>
+          <Text>Extracted Frames:</Text>
+          <View style={styles.previewContainer}>
+            {frames.map((base64, idx) => (
+              <Image
+                key={idx}
+                source={{ uri: `data:image/jpeg;base64,${base64}` }}
+                style={styles.image}
+              />
+            ))}
+          </View>
+          <Button title="Submit Frames" onPress={submitFrames} color="green" />
+        </>
       )}
-    </View>
+      {loading && <Text>Processing...</Text>}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
   },
   previewContainer: {
     flexDirection: 'row',

@@ -192,8 +192,8 @@ module.exports = {
         var userId = req.params.id;
         var images = req.body.images;
 
-        if (!images || !Array.isArray(images) || images.length !== 5) {
-            return res.status(400).json({ message: 'You must provide exactly 5 images.' });
+        if (!images || !Array.isArray(images)) {
+            return res.status(400).json({ message: 'You must provide images.' });
         }
 
         fetch('http://localhost:5000/setup-face', {
