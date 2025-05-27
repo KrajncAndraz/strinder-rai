@@ -19,14 +19,25 @@ export default function FaceSetupScreen() {
       Alert.alert('Camera permission required');
       return;
     }
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Videos,
-      quality: 0.7,
-    });
-    if (!result.canceled && result.assets?.[0].uri) {
-      setVideoUri(result.assets[0].uri);
-      extractFrames(result.assets[0].uri);
-    }
+    Alert.alert(
+      'Navodila',
+      'Obraz drži v sredini zaslona, posnemi video svojega obraza v dobri svetlobi. Video naj bo dolg vsaj 5 sekund.',
+      [
+        {
+          text: 'OK',
+          onPress: async () => {
+            const result = await ImagePicker.launchCameraAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.Videos,
+              quality: 0.7,
+            });
+            if (!result.canceled && result.assets?.[0].uri) {
+              setVideoUri(result.assets[0].uri);
+              extractFrames(result.assets[0].uri);
+            }
+          },
+        },
+      ]
+    );
   };
 
   const extractFrames = async (uri: string) => {
@@ -100,11 +111,17 @@ export default function FaceSetupScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text>Record a video for face setup:</Text>
-      <Button title="Record Video" onPress={recordVideo} />
+      <Text style={{ marginBottom: 10, fontWeight: 'bold', textAlign: 'center' }}>
+        Snemaj video svojega obraza za nastavitev 2FA
+      </Text>
+      
+      <Button title="Začni snemanje" onPress={recordVideo} />
       {frames.length > 0 && (
         <>
-          <Text>Extracted Frames:</Text>
+          <View style={{ marginVertical: 16 }}>
+            <Button title="Pošlji slike" onPress={submitFrames} color="green" />
+          </View>
+          <Text>Izvlečeni okvirji:</Text>
           <View style={styles.previewContainer}>
             {frames.map((base64, idx) => (
               <Image
@@ -114,10 +131,10 @@ export default function FaceSetupScreen() {
               />
             ))}
           </View>
-          <Button title="Submit Frames" onPress={submitFrames} color="green" />
+          
         </>
       )}
-      {loading && <Text>Processing...</Text>}
+      {loading && <Text>Obdelujem...</Text>}
     </ScrollView>
   );
 }
@@ -128,6 +145,23 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
+  },
+  overlayContainer: {
+    width: 250,
+    height: 250,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 20,
+    backgroundColor: '#eee',
+    borderRadius: 16,
+  },
+  greenSquare: {
+    width: 200,
+    height: 200,
+    borderWidth: 3,
+    borderColor: 'green',
+    borderRadius: 10,
+    backgroundColor: 'transparent',
   },
   previewContainer: {
     flexDirection: 'row',
