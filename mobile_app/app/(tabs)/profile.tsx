@@ -36,7 +36,7 @@ export default function Profile() {
 
   const handleRegister = async () => {
     try {
-      const res = await axios.post(`${BASE_URL}`, { username, password, email });
+      const res = await axios.post(`${URL}`, { username, password, email });
       Alert.alert('Success', 'Registered successfully. You can now log in.');
       setIsLogin(true);
     } catch (error: any) {
@@ -47,7 +47,7 @@ export default function Profile() {
 
   const handleLogout = async () => {
     try {
-      await axios.get(`${BASE_URL}/logout`, { withCredentials: true });
+      await axios.get(`${URL}/logout`, { withCredentials: true });
       setUser(null);
     } catch (error) {
       Alert.alert('Logout failed');
@@ -60,7 +60,7 @@ export default function Profile() {
         Alert.alert('Error', 'User ID not found');
         return;
       }
-      const res = await axios.get(`${BASE_URL}/${userId}/check-2fa`);
+      const res = await axios.get(`${URL}/${userId}/check-2fa`);
       if (res.data.twoFAInProgress) {
         router.push({ pathname: '/setup/verify', params: { userId } });
       } else {

@@ -21,7 +21,7 @@ export default function FaceSetupScreen() {
     }
     Alert.alert(
       'Navodila',
-      'Poravnaj obraz v zeleni kvadratek in pritisni gumb za snemanje v kameri. Po koncu snemanja bo video samodejno obdelan.',
+      'Obraz drži v sredini zaslona, posnemi video svojega obraza v dobri svetlobi. Video naj bo dolg vsaj 5 sekund.',
       [
         {
           text: 'OK',
@@ -112,14 +112,15 @@ export default function FaceSetupScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={{ marginBottom: 10, fontWeight: 'bold', textAlign: 'center' }}>
-        Poravnaj obraz v zeleni kvadratek in pritisni "Začni snemanje"
+        Snemaj video svojega obraza za nastavitev 2FA
       </Text>
-      <View style={styles.overlayContainer}>
-        <View style={styles.greenSquare} />
-      </View>
+      
       <Button title="Začni snemanje" onPress={recordVideo} />
       {frames.length > 0 && (
         <>
+          <View style={{ marginVertical: 16 }}>
+            <Button title="Pošlji slike" onPress={submitFrames} color="green" />
+          </View>
           <Text>Izvlečeni okvirji:</Text>
           <View style={styles.previewContainer}>
             {frames.map((base64, idx) => (
@@ -130,7 +131,7 @@ export default function FaceSetupScreen() {
               />
             ))}
           </View>
-          <Button title="Pošlji slike" onPress={submitFrames} color="green" />
+          
         </>
       )}
       {loading && <Text>Obdelujem...</Text>}
