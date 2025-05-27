@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../../constants/ip'; 
 const router = useRouter();
 
-const URL = '${BASE_URL}/users';
+const URL = `${BASE_URL}/users`;
 
 export default function Profile() {
   const [isLogin, setIsLogin] = useState(true); // Toggle between Login and Register
