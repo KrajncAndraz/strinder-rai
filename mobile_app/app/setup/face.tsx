@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as VideoThumbnails from 'expo-video-thumbnails';
 import * as Video from 'expo-av';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { BASE_URL } from '../../constants/ip'; 
 
 export default function FaceSetupScreen() {
   const [videoUri, setVideoUri] = useState<string | null>(null);
@@ -79,7 +80,7 @@ export default function FaceSetupScreen() {
     }
     setLoading(true);
     try {
-      const response = await fetch(`http://10.0.2.2:3001/users/${userId}/set-2fa`, {
+      const response = await fetch(`${BASE_URL}/users/${userId}/set-2fa`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ images: frames }),

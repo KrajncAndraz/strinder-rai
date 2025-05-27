@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, Image, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { BASE_URL } from '../../constants/ip'; 
 
 export default function Verify2FAScreen() {
   const [image, setImage] = useState<string | null>(null);
@@ -31,7 +32,7 @@ export default function Verify2FAScreen() {
     }
     setLoading(true);
     try {
-      const response = await fetch(`http://10.0.2.2:3001/users/${userId}/verify-2fa`, {
+      const response = await fetch(`${BASE_URL}/users/${userId}/verify-2fa`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image }),
