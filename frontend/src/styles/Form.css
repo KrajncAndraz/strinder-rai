@@ -5,8 +5,8 @@ form {
     max-width: 25%;
     margin: 0 auto;
     padding: 1rem;
-    border: 2px solid var(--color-text-primary);
-    border-radius: 15px;
+    border: var(--dimen-border-width) solid var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
     background-color: var(--color-background-secondary);
 }
 
@@ -44,8 +44,8 @@ form {
 
 textarea {
     padding: 0.5rem;
-    border: solid 2px var(--color-text-primary);
-    border-radius: 15px;
+    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
     resize: none;
     overflow: hidden;
     background-color: var(--color-background-secondary);
@@ -53,8 +53,8 @@ textarea {
 
 input {
     padding: 0.5rem;
-    border: solid 2px var(--color-text-primary);
-    border-radius: 15px;
+    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
     width: 100%;
     background-color: var(--color-background-secondary);
 }
@@ -64,7 +64,7 @@ input {
         background-color: var(--color-background-accent);
         color: var(--color-text-primary);
         border: none;
-        border-radius: 15px;
+        border-radius: var(--dimen-border-radius);
         padding: 0.5rem;
         margin-top: 1rem;
         transition: background-color 0.75s, color 0.75s;
@@ -75,8 +75,8 @@ input {
             background-color: var(--color-background-accent-hover);
             color: var(--color-text-primary);
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 0 20px var(--color-background-accent-hover);
+            border-radius: var(--dimen-border-radius);
+            box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accent-hover);
             padding: 0.5rem;
         }
 
@@ -87,8 +87,8 @@ input {
     align-items: center;
     gap: 0.5rem;
     width: 90%;
-    border: solid 2px var(--color-text-primary);
-    border-radius: 15px;
+    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
     margin: 0.5rem auto 2rem auto;
     padding: 0.5rem;
     font-size: 1.4rem;
@@ -110,7 +110,7 @@ input {
 
     #accept:hover {
         background-color: var(--color-background-accept-hover);
-        box-shadow: 0 0 20px var(--color-background-accept-hover);
+        box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accept-hover);
     }
 
 #reject {
@@ -121,7 +121,7 @@ input {
 
     #reject:hover {
         background-color: var(--color-background-reject-hover);
-        box-shadow: 0 0 20px var(--color-background-reject-hover);
+        box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-reject-hover);
     }
 
 .centered {
@@ -154,50 +154,44 @@ input {
     left: 0;
     height: 1.75rem;
     width: 1.75rem;
-    background-color: #eee;
 }
 
 .container2FA input ~ .checkmark {
     background-color: var(--color-background-terciary);
-    border: 2px solid var(--color-background-terciary);
+    border: var(--dimen-border-width) solid var(--color-background-terciary);
     border-radius: 50%;
     transition: border-color 0.5s, color 0.5s;
 }
 
-/* On mouse-over, add a grey background color */
 .container2FA:hover input ~ .checkmark {
     background-color: var(--color-background-accent-hover);
     border-color: var(--color-background-accent-hover);
-    box-shadow: 0 0 20px var(--color-background-accent-hover);
+    box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accent-hover);
 }
 
 .container2FA:hover input:checked ~ .checkmark {
     box-shadow: initial;
     background-color: var(--color-background-accent-hover);
     border-color: var(--color-background-accent-hover);
-    box-shadow: 0 0 20px var(--color-background-accent-hover);
+    box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accent-hover);
 }
 
-/* When the checkbox is checked, add a blue background */
 .container2FA input:checked ~ .checkmark {
     background-color: var(--color-background-accent);
     border-color: var(--color-background-accent);
     transition: background-color 0.5s, color 0.5s;
 }
 
-/* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
-/* Show the checkmark when checked */
 .container2FA input:checked ~ .checkmark:after {
     display: block;
 }
 
-/* Style the checkmark/indicator */
 .container2FA .checkmark:after {
     left: 37.5%;
     top: 22.5%;
