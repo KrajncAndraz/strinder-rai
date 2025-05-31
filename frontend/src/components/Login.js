@@ -39,15 +39,16 @@ function Login() {
                 value={username} onChange={(e) => (setUsername(e.target.value))} />
             <input type="password" name="password" placeholder="Password"
                 value={password} onChange={(e) => (setPassword(e.target.value))} />
-            <div style={{ display: 'flex', alignItems: 'center', margin: '8px 0' }}>
+            <label htmlFor="use2FA" class="container2FA">
                 <input
                     type="checkbox"
                     id="use2FA"
                     checked={use2FA}
                     onChange={(e) => setUse2FA(e.target.checked)}
                 />
-                <label htmlFor="use2FA" style={{ marginLeft: '8px' }}>Use 2FA for this login</label>
-            </div>
+                Use 2FA for this login
+                <span class="checkmark"></span>
+            </label>
             <input type="submit" name="submit" value="Log in" />
             <label>{error}</label>
         </form>
