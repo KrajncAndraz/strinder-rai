@@ -101,22 +101,24 @@ function WorkoutDetails() {
     return (
         <div className="workout-details">
             <h2>Workout details</h2>
-            <p>
-                <strong>Name:</strong> {workout.name}
-            </p>
-            <p>
-                <strong>Description:</strong> {workout.description}
-            </p>
-            <p>
-                <strong>Started at:</strong> {new Date(workout.startTime).toLocaleString()}
-            </p>
+            <div className="workout_description">
+                <p>
+                    <strong>Name:</strong> {workout.name}
+                </p>
+                <p>
+                    <strong>Description:</strong> {workout.description}
+                </p>
+                <p>
+                    <strong>Started at:</strong> {new Date(workout.startTime).toLocaleString()}
+                </p>
+            </div>
 
             <br />
             <h3>Trackers</h3>
             <div>
                 <ul>
                     {workout.trackers.map((tracker) => (
-                        <li key={tracker._id}>
+                        <li key={tracker._id} className="workout_item">
                             <p>
                                 <strong>Lat:</strong> {tracker.lat}, <strong>Long:</strong> {tracker.long}
                             </p>
@@ -124,7 +126,6 @@ function WorkoutDetails() {
                                 <strong>Time:</strong> {new Date(tracker.pingTime).toLocaleString()}
                             </p>
                             <button onClick={() => handleDeleteTracker(tracker._id)}>Delete</button>
-                            <hr />
                         </li>
                     ))}
                 </ul>

@@ -96,9 +96,9 @@ function AddWorkout() {
 
             <h2>Workout list</h2>
             <div>
-                <ul>
+                <ul className="workout_list">
                     {workouts.map((workout) => (
-                        <li key={workout._id}>
+                        <li key={workout._id} className="workout_item">
                             <p>
                                 <strong>Name:</strong> {workout.name}
                             </p>
@@ -111,7 +111,6 @@ function AddWorkout() {
                             <button onClick={() => navigate(`/workouts/view/${workout._id}`)}>
                                 Inspect Workout
                             </button>
-                            <hr />
                         </li>
                     ))}
                 </ul>

@@ -2,6 +2,31 @@
     padding-bottom: 2rem;
 }
 
+.workout_list {
+    padding-bottom: 2rem;
+}
+
+.workout_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    margin: 2rem auto;
+    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
+    background-color: var(--color-background-secondary);
+}
+
+.workout_description {
+    padding-left: 2rem;
+}
+
+
+
+
+
+
 .map {
     width: 98%;
     height: 35rem;
