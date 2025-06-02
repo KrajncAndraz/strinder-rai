@@ -15,7 +15,8 @@ import ChatLogs from './components/ChatLogs';
 import ChatMessages from './components/ChatMessages';
 import AddWorkout from './components/AddWorkout';
 import WorkoutDetails from './components/WorkoutDetails';
-import Mqttlog from './components/Mqttlog'; // <-- Add this line at the top with your other imports
+import Mqttlog from './components/Mqttlog'; // <-- Add this line at the top with your other importsž
+import StatisticsPage from './components/StatisticsPage';
 
 
 function App() {
@@ -70,7 +71,7 @@ function App() {
             <Route path="/workouts" element={<AddWorkout />} />
             <Route path="/workouts/view/:workoutId" element={<WorkoutDetails />} />
             <Route path="/mqttlog" element={<Mqttlog />} />
-
+            <Route path="/statistics" element={<StatisticsPage />} />
           </Routes>
         </div>
       </UserContext.Provider>

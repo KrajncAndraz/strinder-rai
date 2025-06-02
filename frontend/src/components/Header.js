@@ -20,6 +20,7 @@ function Header(props) {
                                 <Link to='/workouts'>Workouts</Link>
                                 <Link to='/logout'>Logout</Link>
                                 <Link to='/mqtt'>Mqtt</Link>
+                                <Link to='/statistics'>Statistics</Link>
 
                             </>
                             :
