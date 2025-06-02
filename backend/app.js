@@ -22,6 +22,8 @@ var friendsRouter = require('./routes/friendsRoutes');
 var chatRouter = require('./routes/chatRoutes');
 var workoutRouter = require('./routes/workoutRoutes');
 var testRoutes = require('./routes/testRoutes');
+var statisticsRoutes = require('./routes/statisticsRoutes');
+// Uvozimo MQTT storitev
 require('./services/mqttService');
 // Uvozimo model za sporočila
 var Message = require('./models/chatModel');
@@ -88,6 +90,7 @@ app.use('/friends', friendsRouter);
 app.use('/chat', chatRouter);
 app.use('/workouts', workoutRouter)
 app.use('/test', testRoutes);
+app.use('/statistics', statisticsRoutes);
 
 // Dodamo Socket.IO instanco v Express app, da jo lahko uporabljajo kontrolerji
 app.set('io', io);

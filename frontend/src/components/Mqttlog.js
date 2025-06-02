@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import mqtt from 'mqtt';
-import { MQTT_IP } from '../constants/mqtt_ip'; 
 
-
-const MQTT_BROKER = `ws://${MQTT_IP}:9001`;
+const MQTT_BROKER = 'ws://172.20.10.2:9001';
 
 export default function MqttLog() {
   const [logs, setLogs] = useState([]);
 
   useEffect(() => {
+    // Inicializiraj client ZNOTRAJ useEffect!
     const client = mqtt.connect(MQTT_BROKER);
 
     client.on('connect', () => {
@@ -32,13 +31,12 @@ export default function MqttLog() {
 
   return (
     <div style={{ padding: 16, backgroundColor: '#fff', height: '100%' }}>
-      <h2 style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8 }}>MQTT Log</h2>
-      <div style={{ maxHeight: 400, overflowY: 'auto' }}>
+      <h2 style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8, color: 'red' }}>MQTT Log</h2>
+      <div style={{ maxHeight: '50vh', overflowY: 'auto' }}>
         {logs.map((log, index) => (
-          <div key={index} style={{ fontSize: 14, margin: '2px 0' }}>{log}</div>
+          <div key={index} style={{ fontSize: 14, margin: '2px 0', color: 'black' }}>{log}</div>
         ))}
       </div>
-      <h1>ddedede</h1>
     </div>
   );
 }
