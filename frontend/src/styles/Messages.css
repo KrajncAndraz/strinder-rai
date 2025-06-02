@@ -14,8 +14,8 @@
 }
 
 .message, .own-message {
-    border: solid 2px var(--color-text-primary);
-    border-radius: 15px;
+    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
     margin: 0.5rem 15rem;
     padding: 0.5rem;
     width: fit-content;
