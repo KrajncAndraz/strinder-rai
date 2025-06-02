@@ -38,6 +38,7 @@ export default function MqttLog() {
           <div key={index} style={{ fontSize: 14, margin: '2px 0' }}>{log}</div>
         ))}
       </div>
+      <h1>ddedede</h1>
     </div>
   );
 }

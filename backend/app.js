@@ -22,7 +22,7 @@ var friendsRouter = require('./routes/friendsRoutes');
 var chatRouter = require('./routes/chatRoutes');
 var workoutRouter = require('./routes/workoutRoutes');
 var testRoutes = require('./routes/testRoutes');
-
+require('./services/mqttService');
 // Uvozimo model za sporočila
 var Message = require('./models/chatModel');
 

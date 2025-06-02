@@ -8,6 +8,9 @@ var workoutSchema = new Schema({
         type: Date,
         default: Date.now
     },
+    totalTime: { 
+        type: Number, default: 0 
+    },
     'createdBy' : {
         type: Schema.Types.ObjectId,
         ref: 'user'

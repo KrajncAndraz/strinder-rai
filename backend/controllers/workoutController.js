@@ -29,6 +29,42 @@ module.exports = {
             res.status(500).json({ error: 'Napaka pri dodajanju workouta.' });
         }
     },
+    //stopworktout and update all fields it recives
+    stopWorkout: async (req, res) => {
+        try {
+            const { workoutId, totalTime, ...otherFields } = req.body;
+
+            if (!workoutId) {
+                return res.status(400).json({ message: 'Missing workoutId' });
+            }
+
+            // Prepare update object
+            const update = {
+                ...otherFields,
+            };
+            if (typeof totalTime !== 'undefined') {
+                update.totalTime = totalTime;
+            }
+            // Optionally mark as stopped
+            update.stopped = true;
+
+            const workout = await Workout.findByIdAndUpdate(
+                workoutId,
+                { $set: update },
+                { new: true }
+            );
+
+            if (!workout) {
+                return res.status(404).json({ message: 'Workout not found' });
+            }
+
+            res.status(200).json({ message: 'Workout stopped', workout });
+        } catch (err) {
+            console.error('Error stopping workout:', err);
+            res.status(500).json({ message: 'Error stopping workout' });
+        }
+    },
+    
 
     /**
      * Pridobi vse workoute
