@@ -3,7 +3,9 @@ import { View, Text, TextInput, Button, StyleSheet, Alert, ScrollView } from 're
 import axios from 'axios';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BASE_URL } from '../../constants/ip'; 
+import { BASE_URL, MQTT_BROKER } from '../../constants/ip';
+import * as Device from 'expo-device';
+import mqtt from 'mqtt';
 const router = useRouter();
 
 const URL = `${BASE_URL}/users`;
@@ -22,6 +24,25 @@ export default function Profile() {
       const loggedInUser = res.data;
       await AsyncStorage.setItem('userId', loggedInUser._id);
       setUser(loggedInUser);
+
+      // --- MQTT: Pošlji podatke o napravi ---
+      const client = mqtt.connect(MQTT_BROKER);
+      client.on('connect', () => {
+        const deviceData = {
+          loginTime: new Date().toISOString(),
+          device: {
+            brand: Device.brand,
+            modelName: Device.modelName,
+            osName: Device.osName,
+            osVersion: Device.osVersion,
+            manufacturer: Device.manufacturer,
+          },
+        };
+        client.publish('statistics/login', JSON.stringify(deviceData), () => {
+          client.end();
+        });
+      });
+
       if (!loggedInUser.has2FA) {
         router.push({
           pathname: '/setup/face',

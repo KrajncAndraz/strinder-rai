@@ -25,6 +25,19 @@ function Login() {
         const data = await res.json();
         if (data._id !== undefined) {
             userContext.setUserContext(data);
+
+            // --- MQTT publish ---
+            const client = mqtt.connect(MQTT_BROKER);
+            client.on('connect', () => {
+                // Prilagodi podatke o napravi po potrebi
+                const deviceData = {
+                    loginTime: new Date().toISOString(),
+                    // Dodaj še druge podatke, če želiš
+                };
+                client.publish('statistics/login', JSON.stringify(deviceData), () => {
+                    client.end();
+                });
+            });
         } else {
             setUsername("");
             setPassword("");

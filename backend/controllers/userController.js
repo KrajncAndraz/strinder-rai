@@ -245,7 +245,7 @@ module.exports = {
             return res.status(400).json({ message: 'You must provide 1 image.' });
         }
 
-        fetch('http://localhost:5000/verify-face', {
+        fetch('http://172.20.10.2:5000/verify-face', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId, image }),
