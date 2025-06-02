@@ -18,6 +18,11 @@
     --color-text-accent: #FF69B4;
     /**/
     --color-transparent: #00000000;
+    /**/
+    /**/
+    --dimen-border-radius: 1vw;
+    --dimen-border-width: 0.1rem;
+    --dimen-box-shadow-blur: 1.25rem;
 }
 
 * {

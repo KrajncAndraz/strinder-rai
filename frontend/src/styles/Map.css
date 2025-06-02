@@ -2,6 +2,31 @@
     padding-bottom: 2rem;
 }
 
+.workout_list {
+    padding-bottom: 2rem;
+}
+
+.workout_item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    padding: 1rem;
+    margin: 2rem auto;
+    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
+    background-color: var(--color-background-secondary);
+}
+
+.workout_description {
+    padding-left: 2rem;
+}
+
+
+
+
+
+
 .map {
     width: 98%;
     height: 35rem;
@@ -11,13 +36,13 @@
 .leaflet-container {
     height: 100%;
     width: 100%;
-    border-radius: 15px;
+    border-radius: var(--dimen-border-radius);
 }
 
 .leaflet-bar {
     background-color: var(--color-background-primary);
-    border: 2px solid var(--color-text-primary);
-    border-radius: 15px;
+    border: var(--dimen-border-width) solid var(--color-text-primary);
+    border-radius: var(--dimen-border-radius);
     padding: 0.25rem;
 }
 
@@ -34,14 +59,14 @@
         .leaflet-bar a span {
             background-color: var(--color-background-accent);
             transition: background-color 0.75s, color 0.75s;
-            border-radius: 55px;
+            border-radius: 50%;
             padding: 0.25rem 0.5rem;
             margin: 0;
         }
 
             .leaflet-bar a span:hover {
                 background-color: var(--color-background-accent-hover);
-                box-shadow: 0 0 10px var(--color-background-accent-hover);
+                box-shadow: 0 0 0.625rem var(--color-background-accent-hover);
             }
 
         .leaflet-bar a.leaflet-disabled{

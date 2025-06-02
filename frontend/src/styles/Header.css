@@ -9,11 +9,11 @@
     background-color: var(--color-background-terciary);
     display: flex;
     justify-content: space-around;
-    box-shadow: 0 5px 20px var(--color-background-terciary);
+    box-shadow: 0 0.25rem var(--dimen-box-shadow-blur) var(--color-background-terciary);
 }
 
     .header-container a {
-        font-size: 24px;
+        font-size: 1.5rem;
         text-decoration: none;
         color: var(--color-text-accent);
         background-color: var(--transparent);
@@ -25,5 +25,5 @@
             color: var(--color-text-accent);
             background-color: var(--transparent);
             transform: scale(1.17);
-            text-shadow: 0 0 20px var(--color-text-accent);
+            text-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-text-accent);
         }

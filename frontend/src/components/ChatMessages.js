@@ -102,7 +102,6 @@ function ChatMessages() {
 
     return (
         <div className="messages-container">
-            <h2>Sporočila</h2>
             {/* Scrollable box za sporočila */}
             <div>
                 <ul className="messages">
