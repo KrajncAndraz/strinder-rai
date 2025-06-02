@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addWorkout, getUserWorkouts, getWorkoutById, addTracker, deleteTracker } = require('../controllers/workoutController');
+const { addWorkout, getUserWorkouts, getWorkoutById, addTracker, deleteTracker, stopWorkout } = require('../controllers/workoutController');
 
 function requiresLogin(req, res, next) {
     if (req.session && req.session.userId) {
@@ -14,6 +14,7 @@ function requiresLogin(req, res, next) {
 
 // Dodaj nov workout
 router.post('/add', requiresLogin, addWorkout);
+router.post('/stop', requiresLogin, stopWorkout);
 
 // Pridobi workoute trenutnega uporabnika
 router.get('/', requiresLogin, getUserWorkouts);
