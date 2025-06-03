@@ -1,12 +1,84 @@
+.requests {
+    width: 100%;
+    padding: 0 2rem;
+    margin: 0;
+}
+
+.request {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    border-left: var(--dimen-border-width) solid var(--color-background-accent);
+    border-radius: var(--dimen-border-radius);
+    margin: 1.5rem 0;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    font-size: 1.3rem;
+    background-color: var(--color-background-secondary);
+    transition: box-shadow 0.75s, transform 0.75s;
+}
+
+    .request:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
+
+.request-actions {
+    display: flex;
+    gap: 2rem;
+    background-color: var(--color-transparent);
+    padding: 0.5rem;
+}
+
+#accept {
+    background-color: var(--color-background-accept);
+    margin: 0 auto;
+    padding: 0.5rem;
+    transition: background-color 0.3s, box-shadow 0.1s;
+}
+
+    #accept:hover {
+        background-color: var(--color-background-accept-hover);
+        box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accept-hover);
+    }
+
+#reject {
+    background-color: var(--color-background-reject);
+    margin: 0 auto;
+    padding: 0.5rem;
+    transition: background-color 0.3s, box-shadow 0.1s;
+}
+
+    #reject:hover {
+        background-color: var(--color-background-reject-hover);
+        box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-reject-hover);
+    }
+
+.friends{
+    padding: 0;
+    margin: 0;
+}
+
 .friend {
     display: flex;
     align-items: center;
     background-color: var(--color-background-secondary);
-    border: var(--dimen-border-width) solid var(--color-text-primary);
+    border: none;
+    border-left: var(--dimen-border-width) solid var(--color-background-accent);
     border-radius: var(--dimen-border-radius);
     padding: 1rem;
-    margin: 1rem 0;
+    margin: 1.5rem 2rem;
+    font-size: 1.2rem;
+    transition: box-shadow 0.75s, transform 0.75s;
 }
+
+    .friend:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
 
     .friend img {
         width: 50px;

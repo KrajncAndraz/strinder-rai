@@ -89,10 +89,10 @@ function AddWorkout() {
                         e.target.style.height = e.target.scrollHeight + 'px';
                     }}
                 />
+                {message && <p style={{ color: 'green' }}>{message}</p>}
+                {error && <p style={{ color: 'red' }}>{error}</p>}
                 <button type="submit">Add Workout</button>
             </form>
-            {message && <p style={{ color: 'green' }}>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
 
             <h2>Workout list</h2>
             <div>
