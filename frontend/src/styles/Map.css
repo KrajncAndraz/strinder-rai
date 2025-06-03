@@ -19,11 +19,25 @@
 }
 
 .workout_description {
-    padding-left: 2rem;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    background-color: var(--color-background-secondary);
+    border-left: 6px solid var(--color-background-accent);
+    border-radius: var(--dimen-border-radius);
+    box-shadow: 0 0.1rem 1rem 0 var(--color-background-terciary);
+    transition: box-shadow 0.3s;
 }
 
     .workout_description p {
         padding-bottom: 0.5rem;
+        margin: 0.5rem 0;
+        font-size: 1.08rem;
+    }
+
+    .workout_description strong {
+        color: var(--color-text-accent);
+        font-weight: 600;
+        letter-spacing: 0.5px;
     }
 
 

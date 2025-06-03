@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect, useContext } from 'react';
-import { UserContext } from '../userContext'; // Prepričaj se, da je to pravilno ime
+import { useState, useEffect } from 'react';
+import '../styles/Messages.css'
 
 
 
 function ChatLogs() {
-    const userContext = useContext(UserContext);
     const [chatLogs, setChatLogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [newChatUsername, setNewChatUsername] = useState('');
@@ -67,14 +66,14 @@ function ChatLogs() {
 
     return (
         <div>
-            <h2>Chat List</h2>
+            <h2>Chats</h2>
             {chatLogs.length === 0 ? (
                 <p>You currently have no chats. Add a new one!</p>
             ) : (
-                <ul className="w100">
+                <ul className="chats">
                     {chatLogs.map(chat => (
-                        <li className="w100" key={chat._id}>
-                            <button className="w100" onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
+                        <li className="chat" key={chat._id}>
+                            <button className="chat_btn" onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
                         </li>
                     ))}
                 </ul>

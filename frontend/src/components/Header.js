@@ -15,9 +15,7 @@ function Header(props) {
                     <>
                         <Link to='/profile'>Profile</Link>
                         <Link to='/friends'>Friends</Link>
-                        <Link to='/addFriend'>Add Friend</Link>
-                        <Link to='/friendRequests'>Friend Requests</Link>
-                        <Link to='/chatlogs'>Chat logs</Link>
+                        <Link to='/chatlogs'>Chats</Link>
                         <Link to='/workouts'>Workouts</Link>
                         <Link to='/mqtt'>Mqtt</Link>
                         <Link to='/statistics'>Statistics</Link>

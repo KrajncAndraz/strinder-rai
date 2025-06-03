@@ -21,27 +21,6 @@ form {
     transform: translateX(-50%);
 }
 
-.w90 {
-    max-width: 90%;
-    margin-bottom: 2rem;
-}
-
-.w100 {
-    width: 100%;
-    padding: 0;
-    margin: 0;
-}
-
-    .w100 button {
-        padding: 1rem;
-        margin: 1rem;
-    }
-
-        .w100 button:hover {
-            padding: 1rem;
-            margin: 1rem;
-        }
-
 textarea {
     padding: 0.5rem;
     border: solid var(--dimen-border-width) var(--color-text-primary);
@@ -79,50 +58,6 @@ input {
             box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accent-hover);
             padding: 0.5rem;
         }
-
-.request {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 0.5rem;
-    width: 90%;
-    border: solid var(--dimen-border-width) var(--color-text-primary);
-    border-radius: var(--dimen-border-radius);
-    margin: 0.5rem auto 2rem auto;
-    padding: 0.5rem;
-    font-size: 1.4rem;
-    background-color: var(--color-background-secondary);
-}
-
-.request-actions {
-    display: flex;
-    gap: 2rem;
-    background-color: var(--color-transparent);
-    padding: 0.5rem;
-}
-
-#accept {
-    background-color: var(--color-background-accept);
-    margin: 0 auto;
-    padding: 0.5rem;
-}
-
-    #accept:hover {
-        background-color: var(--color-background-accept-hover);
-        box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accept-hover);
-    }
-
-#reject {
-    background-color: var(--color-background-reject);
-    margin: 0 auto;
-    padding: 0.5rem;
-}
-
-    #reject:hover {
-        background-color: var(--color-background-reject-hover);
-        box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-reject-hover);
-    }
 
 .centered {
     text-align: center;

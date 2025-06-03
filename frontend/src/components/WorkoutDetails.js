@@ -113,6 +113,7 @@ function WorkoutDetails() {
                 </p>
             </div>
 
+            <br />
             <WorkoutMap trackers={workout.trackers} />
 
             <br />
