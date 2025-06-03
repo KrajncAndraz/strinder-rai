@@ -13,14 +13,42 @@
     width: 100%;
     padding: 1rem;
     margin: 2rem auto;
-    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border-left: var(--dimen-border-width) solid var(--color-background-accent);
     border-radius: var(--dimen-border-radius);
     background-color: var(--color-background-secondary);
+    transition: box-shadow 0.75s, transform 0.75s;
 }
 
+    .workout_item:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
+
 .workout_description {
-    padding-left: 2rem;
+    padding: 1.5rem 2rem;
+    margin: 1.5rem 0;
+    background-color: var(--color-background-secondary);
+    border-left: var(--dimen-border-width) solid var(--color-background-accent);
+    border-radius: var(--dimen-border-radius);
+    transition: box-shadow 0.75s, transform 0.75s;
 }
+
+    .workout_description:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
+
+    .workout_description p {
+        padding-bottom: 0.5rem;
+        margin: 0.5rem 0;
+        font-size: 1.08rem;
+    }
+
+    .workout_description strong {
+        color: var(--color-text-accent);
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
 
 
 
@@ -28,10 +56,16 @@
 
 
 .map {
-    width: 98%;
-    height: 35rem;
-    margin: 1rem;
+    width: 75%;
+    height: 40vw;
+    margin: 1rem auto;
+    transition: box-shadow 0.75s, transform 0.75s;
 }
+
+    .map:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
 
 .leaflet-container {
     height: 100%;

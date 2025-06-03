@@ -20,7 +20,7 @@ function WorkoutMap({ trackers }) {
     const positions = trackers.map((tracker) => [parseFloat(tracker.lat), parseFloat(tracker.long)]);
     
     return (
-        <div className="map" style={{ width: '75%', paddingLeft: '22%' }}>
+        <div className="map">
             <MapContainer center={positions[0] || [0, 0]} zoom={12}>
                 <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

@@ -114,22 +114,7 @@ function WorkoutDetails() {
             </div>
 
             <br />
-            <h3>Trackers</h3>
-            <div>
-                <ul>
-                    {workout.trackers.map((tracker) => (
-                        <li key={tracker._id} className="workout_item">
-                            <p>
-                                <strong>Lat:</strong> {tracker.lat}, <strong>Long:</strong> {tracker.long}
-                            </p>
-                            <p>
-                                <strong>Time:</strong> {new Date(tracker.pingTime).toLocaleString()}
-                            </p>
-                            <button onClick={() => handleDeleteTracker(tracker._id)}>Delete</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+            <WorkoutMap trackers={workout.trackers} />
 
             <br />
             <h3 className="centered">Add Tracker</h3>
@@ -155,7 +140,23 @@ function WorkoutDetails() {
                 <button type="submit">Add Tracker</button>
             </form>
 
-            <WorkoutMap trackers={workout.trackers} />
+            <br />
+            <h3>Trackers</h3>
+            <div>
+                <ul>
+                    {workout.trackers.map((tracker) => (
+                        <li key={tracker._id} className="workout_item">
+                            <p>
+                                <strong>Lat:</strong> {tracker.lat}, <strong>Long:</strong> {tracker.long}
+                            </p>
+                            <p>
+                                <strong>Time:</strong> {new Date(tracker.pingTime).toLocaleString()}
+                            </p>
+                            <button onClick={() => handleDeleteTracker(tracker._id)}>Delete</button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }

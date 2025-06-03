@@ -48,7 +48,7 @@ export default function StatisticsPage() {
         {
           label: 'Število trackerjev',
           data: counts,
-          backgroundColor: 'rgba(75,192,192,0.6)',
+          backgroundColor: 'var(--color-background-primary)',
         }
       ]
     });
@@ -87,14 +87,14 @@ export default function StatisticsPage() {
         <div style={{
           maxHeight: 500,
           overflowY: 'auto',
-          border: '1px solid #ccc',
+          borderLeft: 'var(--dimen-border-width) solid var(--color-background-accent)',
           borderRadius: 8,
           padding: 12,
-          background: '#fafafa'
+          background: 'var(--color-background-secondary)'
         }}>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {devices.map((stat, i) => (
-              <li key={stat._id || i} style={{ marginBottom: 12, borderBottom: '1px solid #eee', paddingBottom: 8 }}>
+                <li key={stat._id || i} style={{ marginBottom: 12, borderBottom: '0.1rem solid var(--color-background-accent)', paddingBottom: 8 }}>
                 <div><b>Čas prijave:</b> {new Date(stat.loginTime).toLocaleString()}</div>
                 <div><b>Brand:</b> {stat.device?.brand || '-'}</div>
                 <div><b>Model:</b> {stat.device?.modelName || '-'}</div>
@@ -125,14 +125,14 @@ export default function StatisticsPage() {
         <div style={{
           maxHeight: 500,
           overflowY: 'auto',
-          border: '1px solid #ccc',
+          borderLeft: 'var(--dimen-border-width) solid var(--color-background-accent)',
           borderRadius: 8,
           padding: 12,
-          background: '#fafafa'
+          background: 'var(--color-background-secondary)'
         }}>
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {trackers.map((tracker, i) => (
-                <li key={i} style={{ marginBottom: 12, borderBottom: '1px solid #eee', paddingBottom: 8 }}>
+                <li key={i} style={{ marginBottom: 12, borderBottom: '0.1rem solid var(--color-background-accent)', paddingBottom: 8 }}>
                 <div><b>Opis workouta:</b> {tracker.workoutDescription}</div>
                 <div><b>Lat:</b> {tracker.lat} <b>Long:</b> {tracker.long}</div>
                 <div><b>Ping čas:</b> {tracker.pingTime ? new Date(tracker.pingTime).toLocaleString() : '-'}</div>

@@ -1,3 +1,4 @@
+import { ThemeProvider } from "./themeContext";
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UserContext } from "./userContext";
@@ -49,33 +50,33 @@ function App() {
    * in s tem dodatno obremenitev (ponovni izris komponente Header, ponastavitev Contextov,...)
    */
   return (
-    <BrowserRouter>
-      <UserContext.Provider value={{
-        user: user,
-        setUserContext: updateUserData
-      }}>
-        <div className="App">
-          <Header title="My application"></Header>
-          <Routes>
-            <Route path="/" ></Route>
-            <Route path="/login" exact element={<Login />}></Route>
-            <Route path="/register" element={<Register />}></Route>
-            <Route path="/publish" element={<AddPhoto />}></Route>
-            <Route path="/profile" element={<Profile />}></Route>
-            <Route path="/logout" element={<Logout />}></Route>
-            <Route path="/addFriend" element={<AddFriend />}></Route>
-            <Route path="/friendRequests" element={<FriendRequests />}></Route>
-            <Route path="/friends" element={<Friends />}></Route>
-            <Route path="/chatlogs" element={<ChatLogs />}></Route>
-            <Route path="/messages/:chatId" element={<ChatMessages />} />
-            <Route path="/workouts" element={<AddWorkout />} />
-            <Route path="/workouts/view/:workoutId" element={<WorkoutDetails />} />
-            <Route path="/mqtt" element={<Mqttlog />} />
-            <Route path="/statistics" element={<StatisticsPage />} />
-          </Routes>
-        </div>
-      </UserContext.Provider>
-    </BrowserRouter>
+        <ThemeProvider>
+          <BrowserRouter>
+              <UserContext.Provider value={{
+                  user: user,
+                  setUserContext: updateUserData
+              }}>
+                  <div className="App">
+                      <Header title="My application"></Header>
+                      <Routes>
+                          <Route path="/" ></Route>
+                          <Route path="/login" exact element={<Login />}></Route>
+                          <Route path="/register" element={<Register />}></Route>
+                          <Route path="/publish" element={<AddPhoto />}></Route>
+                          <Route path="/profile" element={<Profile />}></Route>
+                          <Route path="/logout" element={<Logout />}></Route>
+                          <Route path="/friends" element={<Friends />}></Route>
+                          <Route path="/chatlogs" element={<ChatLogs />}></Route>
+                          <Route path="/messages/:chatId" element={<ChatMessages />} />
+                          <Route path="/workouts" element={<AddWorkout />} />
+                          <Route path="/workouts/view/:workoutId" element={<WorkoutDetails />} />
+                          <Route path="/mqtt" element={<Mqttlog />} />
+                          <Route path="/statistics" element={<StatisticsPage />} />
+                      </Routes>
+                  </div>
+              </UserContext.Provider>
+          </BrowserRouter>
+        </ThemeProvider>
   );
 }
 
