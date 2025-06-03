@@ -59,6 +59,7 @@ export default function StatisticsPage() {
     const osNameCounts = {};
     devices.forEach(dev => {
       let osName = dev.device?.osName || 'Neznano';
+      //splita da nastane samo ime naprave ker je drugace predolg stavek za piechart
       if (osName.includes('/')) osName = osName.split('/')[0];
       if (osName.includes(' ')) osName = osName.split(' ')[0];
       osNameCounts[osName] = (osNameCounts[osName] || 0) + 1;
