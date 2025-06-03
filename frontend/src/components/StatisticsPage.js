@@ -1,8 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Bar } from 'react-chartjs-2';
+import { Chart, BarElement, CategoryScale, LinearScale, Tooltip, Legend } from 'chart.js';
+
+Chart.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 export default function StatisticsPage() {
   const [devices, setDevices] = useState([]);
   const [trackers, setTrackers] = useState([]);
+  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
 
   useEffect(() => {
     fetch('http://localhost:3001/statistics/devices')
@@ -15,6 +20,37 @@ export default function StatisticsPage() {
       .then(data => setTrackers(Array.isArray(data) ? data : []))
       .catch(() => setTrackers([]));
   }, []);
+
+  useEffect(() => {
+    console.log('trackers:', trackers);
+    // Pridobi zadnjih 7 dni
+    const days = [];
+    const counts = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      days.push(d.toLocaleDateString());
+      counts.push(0);
+    }
+    // Preštej trackerje po dnevih
+    trackers.forEach(tracker => {
+      if (tracker.pingTime) {
+        const date = new Date(tracker.pingTime).toLocaleDateString();
+        const idx = days.indexOf(date);
+        if (idx !== -1) counts[idx]++;
+      }
+    });
+    setChartData({ 
+      labels: days, 
+      datasets: [
+        {
+          label: 'Število trackerjev',
+          data: counts,
+          backgroundColor: 'rgba(75,192,192,0.6)',
+        }
+      ]
+    });
+  }, [trackers]);
 
   return (
     <div style={{ display: 'flex', gap: 32, padding: 32 }}>
@@ -63,6 +99,24 @@ export default function StatisticsPage() {
             ))}
             </ul>
         </div>
+        {chartData.labels.length > 0 && chartData.datasets.length > 0 && (
+        <div style={{ marginTop: 32 }}>
+          <h3>Število trackerjev po dnevih (zadnjih 7 dni)</h3>
+          <Bar
+            data={chartData}
+            options={{
+              responsive: true,
+              plugins: {
+                legend: { display: false },
+              },
+              scales: {
+                y: { beginAtZero: true, precision: 0 },
+              },
+            }}
+            height={200}
+          />
+        </div>
+      )}
       </div>
     </div>
   );

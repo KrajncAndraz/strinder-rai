@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../userContext';
 import { Navigate } from 'react-router-dom';
 import '../styles/Form.css';
+import mqtt from 'mqtt';
+import { MQTT_IP } from '../constants/mqtt_ip'; // Import your MQTT broker URL
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -27,7 +29,7 @@ function Login() {
             userContext.setUserContext(data);
 
             // --- MQTT publish ---
-            const client = mqtt.connect(MQTT_BROKER);
+            const client = mqtt.connect(MQTT_IP);
             client.on('connect', () => {
                 // Prilagodi podatke o napravi po potrebi
                 const deviceData = {
