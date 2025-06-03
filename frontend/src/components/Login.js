@@ -3,7 +3,8 @@ import { UserContext } from '../userContext';
 import { Navigate } from 'react-router-dom';
 import '../styles/Form.css';
 import mqtt from 'mqtt';
-import { MQTT_IP } from '../constants/mqtt_ip'; // Import your MQTT broker URL
+import { MQTT_BROKER } from '../constants/mqtt_ip';
+import { UAParser } from 'ua-parser-js';
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -29,17 +30,24 @@ function Login() {
             userContext.setUserContext(data);
 
             // --- MQTT publish ---
-            const client = mqtt.connect(MQTT_IP);
+            const client = mqtt.connect(MQTT_BROKER);
             client.on('connect', () => {
-                // Prilagodi podatke o napravi po potrebi
-                const deviceData = {
-                    loginTime: new Date().toISOString(),
-                    // Dodaj še druge podatke, če želiš
-                };
-                client.publish('statistics/login', JSON.stringify(deviceData), () => {
-                    client.end();
-                });
+            const parser = new UAParser();
+            const uaResult = parser.getResult();
+            const deviceData = {
+                loginTime: new Date().toISOString(),
+                device: {
+                    brand: uaResult.device.vendor || 'Unknown',
+                    modelName: uaResult.device.model || 'Unknown',
+                    osName: uaResult.os.name || 'Unknown',
+                    osVersion: uaResult.os.version || 'Unknown',
+                    manufacturer: uaResult.device.vendor || 'Unknown',
+                },
+            };
+            client.publish('statistics/login', JSON.stringify(deviceData), () => {
+                client.end();
             });
+        });
         } else {
             setUsername("");
             setPassword("");

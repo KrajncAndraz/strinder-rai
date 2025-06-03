@@ -56,13 +56,15 @@ export default function StatisticsPage() {
 
   useEffect(() => {
     // Preštej modele naprav
-    const brandCounts = {};
+    const osNameCounts = {};
     devices.forEach(dev => {
-      const brand = dev.device?.brand || 'Neznano';
-      brandCounts[brand] = (brandCounts[brand] || 0) + 1;
+      let osName = dev.device?.osName || 'Neznano';
+      if (osName.includes('/')) osName = osName.split('/')[0];
+      if (osName.includes(' ')) osName = osName.split(' ')[0];
+      osNameCounts[osName] = (osNameCounts[osName] || 0) + 1;
     });
-    const labels = Object.keys(brandCounts);
-    const data = Object.values(brandCounts);
+    const labels = Object.keys(osNameCounts);
+    const data = Object.values(osNameCounts);
     setPieData({
       labels,
       datasets: [
