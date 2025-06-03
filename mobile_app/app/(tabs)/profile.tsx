@@ -6,6 +6,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL, MQTT_BROKER } from '../../constants/ip';
 import * as Device from 'expo-device';
 import mqtt from 'mqtt';
+import { useEffect } from 'react';
+
 const router = useRouter();
 
 const URL = `${BASE_URL}/users`;
@@ -22,7 +24,7 @@ export default function Profile() {
     try {
       const res = await axios.post(`${URL}/login`, { username, password }, { withCredentials: true });
       const loggedInUser = res.data;
-      await AsyncStorage.setItem('userId', loggedInUser._id);
+      await AsyncStorage.setItem('user', JSON.stringify(loggedInUser));
       setUser(loggedInUser);
 
       // --- MQTT: Pošlji podatke o napravi ---
@@ -69,6 +71,7 @@ export default function Profile() {
   const handleLogout = async () => {
     try {
       await axios.get(`${URL}/logout`, { withCredentials: true });
+      await AsyncStorage.removeItem('user');
       setUser(null);
     } catch (error) {
       Alert.alert('Logout failed');
@@ -91,6 +94,15 @@ export default function Profile() {
       Alert.alert('Failed to check 2FA status');
     }
   };
+  useEffect(() => {
+    const loadUser = async () => {
+      const userStr = await AsyncStorage.getItem('user');
+      if (userStr) {
+        setUser(JSON.parse(userStr));
+      }
+    };
+    loadUser();
+  }, []);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import mqtt from 'mqtt';
+import '../styles/Mqtt.css'
 
 const MQTT_BROKER = 'ws://172.20.10.2:9001';
 

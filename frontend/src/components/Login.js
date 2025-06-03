@@ -73,7 +73,7 @@ function Login() {
                 <span class="checkmark"></span>
             </label>
             <input type="submit" name="submit" value="Log in" />
-            <label>{error}</label>
+            <label style={{color: 'red'}}>{error}</label>
         </form>
     );
 }
