@@ -1,5 +1,6 @@
 .header-container {
     position: fixed;
+    align-content: baseline;
     top: 0;
     left: 0;
     width: 100%;
@@ -36,3 +37,7 @@
             transform: scale(1.17);
             text-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-text-accent);
         }
+
+.theme_btn{
+    margin: 0;
+}
