@@ -10,14 +10,21 @@
     justify-content: space-between;
     align-items: center;
     gap: 0.5rem;
-    border: solid var(--dimen-border-width) var(--color-text-primary);
+    border: none;
+    border-left: var(--dimen-border-width) solid var(--color-background-accent);
     border-radius: var(--dimen-border-radius);
-    margin: 1rem 0;
+    margin: 1.5rem 0;
     padding: 0.5rem 1rem;
     width: 100%;
     font-size: 1.3rem;
     background-color: var(--color-background-secondary);
+    transition: box-shadow 0.75s, transform 0.75s;
 }
+
+    .request:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
 
 .request-actions {
     display: flex;
@@ -30,6 +37,7 @@
     background-color: var(--color-background-accept);
     margin: 0 auto;
     padding: 0.5rem;
+    transition: background-color 0.3s, box-shadow 0.1s;
 }
 
     #accept:hover {
@@ -41,6 +49,7 @@
     background-color: var(--color-background-reject);
     margin: 0 auto;
     padding: 0.5rem;
+    transition: background-color 0.3s, box-shadow 0.1s;
 }
 
     #reject:hover {
@@ -57,12 +66,19 @@
     display: flex;
     align-items: center;
     background-color: var(--color-background-secondary);
-    border: var(--dimen-border-width) solid var(--color-text-primary);
+    border: none;
+    border-left: var(--dimen-border-width) solid var(--color-background-accent);
     border-radius: var(--dimen-border-radius);
     padding: 1rem;
-    margin: 1rem 2rem;
+    margin: 1.5rem 2rem;
     font-size: 1.2rem;
+    transition: box-shadow 0.75s, transform 0.75s;
 }
+
+    .friend:hover {
+        box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
+        transform: scale(1.01);
+    }
 
     .friend img {
         width: 50px;

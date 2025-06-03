@@ -66,6 +66,20 @@ function ChatLogs() {
 
     return (
         <div>
+            <h3 className="centered">Add new chat</h3>
+            <form onSubmit={handleAddChat}>
+                <input
+                    type="text"
+                    placeholder="Username"
+                    value={newChatUsername}
+                    onChange={(e) => setNewChatUsername(e.target.value)}
+                    required
+                />
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+                <button type="submit">Add</button>
+            </form>
+
+            <br />
             <h2>Chats</h2>
             {chatLogs.length === 0 ? (
                 <p>You currently have no chats. Add a new one!</p>
@@ -78,20 +92,6 @@ function ChatLogs() {
                     ))}
                 </ul>
             )}
-
-            <br />
-            <h3 className="centered">Add new chat</h3>
-            <form onSubmit={handleAddChat}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={newChatUsername}
-                    onChange={(e) => setNewChatUsername(e.target.value)}
-                    required
-                />
-                <button type="submit">Add</button>
-            </form>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
 }

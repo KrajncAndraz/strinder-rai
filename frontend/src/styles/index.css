@@ -2,8 +2,9 @@
 
 :root {
     --color-background-primary: #3C3C3C;
-    --color-background-secondary: #333;
+    --color-background-secondary: #323232;
     --color-background-terciary: #1C1C1C;
+    --color-background-input: #2A2A2A;
     --color-background-accent: #FF69B455;
     --color-background-accent-hover: #FF69B488;
     --color-background-accent-disabled: #FF69B433;
@@ -21,7 +22,7 @@
     /**/
     /**/
     --dimen-border-radius: 1vw;
-    --dimen-border-width: 0.1rem;
+    --dimen-border-width: 0.3rem;
     --dimen-box-shadow-blur: 1.25rem;
 }
 

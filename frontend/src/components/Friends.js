@@ -153,6 +153,7 @@ function Friends(props) {
 
     return (
         <div>
+            <h2 className="centered">Send friend request</h2>
             <form className="form-group" onSubmit={onSubmit}>
                 {!userContext.user ? <Navigate replace to="/login" /> : ""}
                 {requestSent ? <Navigate replace to="/" /> : ""}
