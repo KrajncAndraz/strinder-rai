@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../userContext';
 import '../styles/Friends.css';
 
@@ -7,6 +7,7 @@ function Friends(props) {
     const userContext = useContext(UserContext);
     const [friends, setFriends] = useState([]);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [requestSent, setRequestSent] = useState(false);
@@ -98,6 +99,54 @@ function Friends(props) {
         }
     }
 
+    async function handleMessage(friend) {
+        // Determine the friend's username
+        const friendUsername = friend.friend1._id === userContext.user._id
+            ? friend.friend2.username
+            : friend.friend1.username;
+
+        try {
+            // Try to create the chat
+            const res = await fetch('http://localhost:3001/chat/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({ username: friendUsername }),
+            });
+
+            if (res.ok) {
+                const chat = await res.json();
+                navigate(`/messages/${chat._id}`);
+            } else {
+                // If chat already exists, find it in the chat list
+                // Fetch all chats for the user
+                const chatsRes = await fetch('http://localhost:3001/chat', {
+                    method: 'GET',
+                    credentials: 'include',
+                });
+                if (!chatsRes.ok) {
+                    alert('Error finding existing chat.');
+                    return;
+                }
+                const chats = await chatsRes.json();
+                // Find the chat with this friend
+                const chat = chats.find(c =>
+                    c.participants &&
+                    c.participants.some(u => u.username === friendUsername)
+                );
+                if (chat) {
+                    navigate(`/messages/${chat._id}`);
+                } else {
+                    alert('Chat exists but could not be found.');
+                }
+            }
+        } catch (err) {
+            alert('Error opening chat.');
+        }
+    }
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -159,11 +208,12 @@ function Friends(props) {
                                     ? friend.friend2.username
                                     : friend.friend1.username}
                             </p>
-                            <button>Message</button>
+                            <button onClick={() => handleMessage(friend)}>Message</button>
                         </li>
                     ))}
                 </ul>
             )}
+            <br />
         </div>
     );
 }
