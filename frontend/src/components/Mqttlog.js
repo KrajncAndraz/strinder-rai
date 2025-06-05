@@ -63,14 +63,14 @@ export default function MqttLog() {
   }, []);
 
   return (
-    <div style={{ padding: 16, backgroundColor: '#fff', height: '100%' }}>
-      <h2 style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 8, color: 'red' }}>MQTT Log</h2>
-       <div style={{ marginBottom: 8, color: 'green' }}>
+    <div className="mqtt_logs">
+      <h2>MQTT Log</h2>
+       <div>
         Aktivnih (zadnjih 5s): {aliveCount}
       </div>
-      <div style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+      <div>
         {logs.map((log, index) => (
-          <div key={index} style={{ fontSize: 14, margin: '2px 0', color: 'black' }}>{log}</div>
+          <div key={index}>{log}</div>
         ))}
       </div>
     </div>
