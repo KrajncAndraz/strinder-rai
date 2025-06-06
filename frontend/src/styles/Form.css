@@ -60,7 +60,7 @@ input, textarea {
         color: var(--color-text-primary);
         border: none;
         border-radius: var(--dimen-border-radius);
-        padding: 0.5rem;
+        padding: 0.75rem;
         margin-top: 1rem;
         transition: background-color 0.75s;
     }
