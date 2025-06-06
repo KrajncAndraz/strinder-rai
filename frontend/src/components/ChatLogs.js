@@ -87,7 +87,10 @@ function ChatLogs() {
                 <ul className="chats">
                     {chatLogs.map(chat => (
                         <li className="chat" key={chat._id}>
-                            <button className="chat_btn" onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
+                            <button className="chat_btn" onClick={() => navigate(`/messages/${chat._id}`)}>
+                                <img src='/Chat.png' alt="chat icon" className="chat_icon" />
+                                {chat.name}
+                            </button>
                         </li>
                     ))}
                 </ul>

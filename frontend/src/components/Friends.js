@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../userContext';
 import '../styles/Friends.css';
+import { ThemeContext } from "../themeContext";
 
 function Friends(props) {
     const userContext = useContext(UserContext);
@@ -13,6 +14,9 @@ function Friends(props) {
     const [requestSent, setRequestSent] = useState(false);
 
     const [requests, setRequests] = useState([]);
+
+    const { theme } = useContext(ThemeContext);
+    const isLight = theme === "light";
 
     useEffect(() => {
         async function fetchFriends() {
@@ -209,7 +213,14 @@ function Friends(props) {
                                     ? friend.friend2.username
                                     : friend.friend1.username}
                             </p>
-                            <button onClick={() => handleMessage(friend)}>Message</button>
+                            <button onClick={() => handleMessage(friend)}>
+                                <img
+                                    src="Message.png"
+                                    alt="Message"
+                                    className={isLight ? "message-icon invert" : "message-icon"}
+                                />
+                                Message
+                            </button>
                         </li>
                     ))}
                 </ul>

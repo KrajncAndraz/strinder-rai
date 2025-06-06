@@ -91,3 +91,12 @@
     .friend button {
         margin: 0 0 0.1rem auto;
     }
+
+        .friend button img {
+            height: 2rem;
+            width: 2rem;
+        }
+
+.message-icon.invert {
+    filter: invert(1);
+}
