@@ -9,7 +9,7 @@ function Header(props) {
     const context = useContext(UserContext);
     const isLoggedIn = !!context.user;
 
-    const nextTheme = theme === "light" ? "dark" : "light";
+    const isLight = theme === "light";
 
     return (
         <header>
@@ -31,13 +31,15 @@ function Header(props) {
                         <Link to='/register'>Register</Link>
                     </>
                 )}
-                <button
-                    onClick={() => setTheme(nextTheme)}
-                    aria-label="Toggle theme"
-                    className="theme_btn"
-                >
-                    {theme === "light" ? "🌞" : "🌙"}
-                </button>
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        checked={isLight}
+                        onChange={() => setTheme(isLight ? "dark" : "light")}
+                        aria-label="Toggle theme"
+                    />
+                    <span class="slider round" />
+                </label>
             </div>
         </header>
     );
