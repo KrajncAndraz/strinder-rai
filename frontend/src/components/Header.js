@@ -38,7 +38,13 @@ function Header(props) {
                         onChange={() => setTheme(isLight ? "dark" : "light")}
                         aria-label="Toggle theme"
                     />
-                    <span class="slider round" />
+                    <span className="slider">
+                        <img
+                            src={isLight ? 'Theme-Light.png' : 'Theme-Dark.png'}
+                            alt="theme icon"
+                            className={`slider-img${isLight ? " slider-img-checked" : ""}`}
+                        />
+                    </span>
                 </label>
             </div>
         </header>

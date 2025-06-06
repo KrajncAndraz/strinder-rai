@@ -85,10 +85,23 @@ input:checked + .slider:before {
 }
 
 /* Rounded sliders */
-.slider.round {
+.slider {
     border-radius: 100vh;
 }
 
-    .slider.round:before {
+    .slider:before {
         border-radius: 50%;
     }
+
+.slider-img {
+    position: absolute;
+    left: 0.3rem;
+    bottom: 0.3rem;
+    height: 1.4rem;
+    width: 1.4rem;
+    transition: transform 0.4s;
+}
+
+.slider-img-checked {
+    transform: translateX(2rem);
+}
