@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+﻿import { useContext, useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../userContext';
 import '../styles/Friends.css';
@@ -188,10 +188,10 @@ function Friends(props) {
                             </p>
                             <div className="request-actions">
                                 <button id="accept" onClick={() => acceptRequest(request._id)}>
-                                    Accept
+                                    <span className="check"></span> Accept
                                 </button>
                                 <button id="reject" onClick={() => declineRequest(request._id)}>
-                                    Reject
+                                    <span className="cross"></span> Reject
                                 </button>
                             </div>
                         </li>

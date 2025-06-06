@@ -36,7 +36,7 @@
 #accept {
     background-color: var(--color-background-accept);
     margin: 0 auto;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     transition: background-color 0.3s, box-shadow 0.1s;
 }
 
@@ -45,16 +45,56 @@
         box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accept-hover);
     }
 
+.check {
+    width: .7rem;
+    height: 1.4rem;
+    border: solid var(--color-text-primary);
+    border-width: 0 0.15rem 0.15rem 0;
+    border-radius: 0.15rem;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    display: inline-block;
+    margin-right: 1rem;
+}
+
 #reject {
     background-color: var(--color-background-reject);
     margin: 0 auto;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     transition: background-color 0.3s, box-shadow 0.1s;
 }
 
     #reject:hover {
         background-color: var(--color-background-reject-hover);
         box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-reject-hover);
+    }
+
+.cross {
+    display: inline-block;
+    width: 1.75rem;
+    height: 1.75rem;
+    position: relative;
+    vertical-align: middle;
+}
+
+    .cross::before, .cross::after {
+        content: '';
+        position: absolute;
+        left: 0.45rem;
+        top: 0;
+        width: 0.15rem;
+        height: 1.5rem;
+        background-color: var(--color-text-primary);
+        border-radius: 0.1rem;
+    }
+
+    .cross::before {
+        transform: rotate(45deg);
+    }
+
+    .cross::after {
+        transform: rotate(-45deg);
     }
 
 .friends{
