@@ -168,11 +168,15 @@ function Friends(props) {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <input
-                    type="submit"
-                    name="submit"
-                    value="Send Friend Request"
-                />
+                <button type="submit" name="submit" className="add-friend-btn"
+                >
+                    <img
+                        src="/Add-Friend.svg"
+                        alt="Add Friend"
+                        className={isLight ? "add_friend-icon invert" : "add_friend-icon"}
+                    />
+                    Send Friend Request
+                </button>
             </form>
 
             <br />
@@ -215,7 +219,7 @@ function Friends(props) {
                             </p>
                             <button onClick={() => handleMessage(friend)}>
                                 <img
-                                    src="Message.png"
+                                    src="/Message.png"
                                     alt="Message"
                                     className={isLight ? "message-icon invert" : "message-icon"}
                                 />

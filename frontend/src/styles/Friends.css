@@ -140,3 +140,13 @@
 .message-icon.invert {
     filter: invert(1);
 }
+
+.add-friend-btn img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 1rem;
+}
+
+.add_friend-icon.invert {
+    filter: invert(1);
+}

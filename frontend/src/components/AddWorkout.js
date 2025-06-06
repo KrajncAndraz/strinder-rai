@@ -114,7 +114,7 @@ function AddWorkout() {
                             </p>
                             <button onClick={() => navigate(`/workouts/view/${workout._id}`)}>
                                 <img
-                                    src="Inspect.png"
+                                    src="/Inspect.png"
                                     alt="Inspect"
                                     className={isLight ? "inspect-icon invert" : "inspect-icon"}
                                 />
