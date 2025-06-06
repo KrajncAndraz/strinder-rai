@@ -40,7 +40,7 @@ function Header(props) {
                     />
                     <span className="slider">
                         <img
-                            src={isLight ? 'Theme-Light.png' : 'Theme-Dark.png'}
+                            src={isLight ? '/Theme-Light.png' : '/Theme-Dark.png'}
                             alt="theme icon"
                             className={`slider-img${isLight ? " slider-img-checked" : ""}`}
                         />
