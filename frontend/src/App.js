@@ -18,6 +18,7 @@ import AddWorkout from './components/AddWorkout';
 import WorkoutDetails from './components/WorkoutDetails';
 import Mqttlog from './components/Mqttlog';
 import StatisticsPage from './components/StatisticsPage';
+import Home from './components/Home';
 
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
                   <div className="App">
                       <Header title="My application"></Header>
                       <Routes>
-                          <Route path="/" ></Route>
+                          <Route path="/" element={<Home />} />
                           <Route path="/login" exact element={<Login />}></Route>
                           <Route path="/register" element={<Register />}></Route>
                           <Route path="/publish" element={<AddPhoto />}></Route>
