@@ -20,6 +20,10 @@ router.delete('/:id', userController.remove);
 router.post('/:id/set-2fa', userController.faceSetup);
 router.get('/:id/check-2fa', userController.check2FA);
 router.post('/:id/verify-2fa', userController.verify2FA);
-
+router.post('/send-push-notification', userController.sendPushNotification);
+router.post('/confirm-login', userController.confirmLogin);
+router.post('/decline-login', userController.declineLogin);
+router.post('/check-login-confirmed', userController.checkLoginConfirmed);
+router.post('/save-push-token', userController.savePushToken);
 
 module.exports = router;

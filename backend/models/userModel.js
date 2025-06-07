@@ -7,7 +7,9 @@ var userSchema = new Schema({
 	'password' : String,
 	'email' : String, 
 	'has2FA': { type: Boolean, default: false },
-	'2faInProgress': { type: Boolean, default: false }
+	'2faInProgress': { type: Boolean, default: false },
+	'pushToken': { type: String },
+    'loginConfirmed': { type: Boolean, default: false }
 });
 
 userSchema.pre('save', function(next){

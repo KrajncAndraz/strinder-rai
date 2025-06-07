@@ -1,4 +1,6 @@
 var UserModel = require('../models/userModel.js');
+const { Expo } = require('expo-server-sdk');
+const expo = new Expo();
 
 /**
  * userController.js
@@ -54,7 +56,9 @@ module.exports = {
         var user = new UserModel({
 			username : req.body.username,
 			password : req.body.password,
-			email : req.body.email
+			email : req.body.email,
+            pushToken: "",
+            loginConfirmed: false 
         });
 
         user.save(function (err, user) {
@@ -145,6 +149,7 @@ module.exports = {
             
             if (typeof req.body.use2FA !== "undefined") {
                 user['2faInProgress'] = !!req.body.use2FA;
+                user.loginConfirmed = false;
                 user.save(function(saveErr) {
                     if (saveErr) {
                         return res.status(500).json({ message: 'Error updating 2FA state', error: saveErr });
@@ -245,7 +250,7 @@ module.exports = {
             return res.status(400).json({ message: 'You must provide 1 image.' });
         }
 
-        fetch('http://172.20.10.2:5000/verify-face', {
+        fetch('http://localhost:5000/verify-face', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userId, image }),
@@ -269,6 +274,88 @@ module.exports = {
             console.error('Error verifying face:', err);
             return res.status(500).json({ message: 'Internal server error', error: err });
         });
-    }
+    },
+
+    savePushToken: async function(req, res) {
+        const { userId, pushToken } = req.body;
+        try {
+            const user = await UserModel.findById(userId);
+            if (!user) {
+                return res.status(404).json({ success: false, message: 'User not found' });
+            }
+            user.pushToken = pushToken;
+            await user.save();
+            return res.json({ success: true });
+        } catch (err) {
+            return res.status(500).json({ success: false, error: err });
+        }
+    },
+
+    sendPushNotification: async function(req, res) {
+        const { username } = req.body;
+        try {
+            const user = await UserModel.findOne({ username });
+            if (!user || !user.pushToken) {
+                return res.status(400).json({ error: 'No push token for user' });
+            }
+
+            const messages = [];
+            if (Expo.isExpoPushToken(user.pushToken)) {
+                messages.push({
+                    to: user.pushToken,
+                    sound: 'default',
+                    body: 'Potrdi prijavo v aplikacijo!',
+                    data: { type: 'login_confirmation', username },
+                });
+            }
+
+            await expo.sendPushNotificationsAsync(messages);
+            return res.json({ success: true });
+        } catch (err) {
+            console.error('Push notification error:', err);
+            return res.status(500).json({ error: 'Push failed' });
+        }
+    },
+
+    confirmLogin: async function(req, res) {
+    const { userId } = req.body;
+        try {
+            const user = await UserModel.findById(userId);
+            if (!user) return res.status(404).json({ success: false });
+            user.loginConfirmed = true;
+            user['2faInProgress'] = false;
+            await user.save();
+            return res.json({ success: true });
+        } catch (err) {
+            return res.status(500).json({ success: false, error: err });
+        }
+    },
+
+    declineLogin: async function(req, res) {
+        const { userId } = req.body;
+        try {
+            const user = await UserModel.findById(userId);
+            if (!user) return res.status(404).json({ success: false });
+            user.loginConfirmed = false;
+            user['2faInProgress'] = false;
+            await user.save();
+            return res.json({ success: true });
+        } catch (err) {
+            return res.status(500).json({ success: false, error: err });
+        }
+    },
+
+    checkLoginConfirmed: async function(req, res) {
+        const { username } = req.body;
+        try {
+            const user = await UserModel.findOne({ username });
+            if (!user) {
+                return res.status(404).json({ confirmed: false });
+            }
+            return res.json({ confirmed: !!user.loginConfirmed });
+        } catch (err) {
+            return res.status(500).json({ confirmed: false, error: err });
+        }
+    },
 
 };

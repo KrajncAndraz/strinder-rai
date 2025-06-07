@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button, Image, StyleSheet, Alert, ActivityIndicator } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { BASE_URL } from '../../constants/ip'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Verify2FAScreen() {
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const router = useRouter();
-  const { userId } = useLocalSearchParams<{ userId: string }>();
+  //const { userId } = useLocalSearchParams<{ userId: string }>();
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const userStr = await AsyncStorage.getItem('user');
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        setUserId(user._id); // ali user.id, odvisno od tvoje strukture
+      }
+    };
+    fetchUserId();
+  }, []);
 
   const takePhoto = async () => {
     const permission = await ImagePicker.requestCameraPermissionsAsync();

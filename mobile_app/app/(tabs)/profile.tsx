@@ -18,7 +18,6 @@ export default function Profile() {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [user, setUser] = useState<any>(null);
-  const { userId } = useLocalSearchParams<{ userId: string }>();
 
   const handleLogin = async () => {
     try {
@@ -77,6 +76,7 @@ export default function Profile() {
       Alert.alert('Logout failed');
     }
   };
+
   const check2FAStatus = async () => {
     try {
       const userId = await AsyncStorage.getItem('userId');
@@ -84,8 +84,8 @@ export default function Profile() {
         Alert.alert('Error', 'User ID not found');
         return;
       }
-      const res = await axios.get(`${URL}/${userId}/check-2fa`);
-      if (res.data.twoFAInProgress) {
+      const res = await axios.get(`${BASE_URL}/users/${user._id}`);
+      if (res.data && res.data['2faInProgress']) {
         router.push({ pathname: '/setup/verify', params: { userId } });
       } else {
         Alert.alert('No 2FA in progress');
@@ -94,6 +94,7 @@ export default function Profile() {
       Alert.alert('Failed to check 2FA status');
     }
   };
+
   useEffect(() => {
     const loadUser = async () => {
       const userStr = await AsyncStorage.getItem('user');

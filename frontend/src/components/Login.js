@@ -9,12 +9,17 @@ import { UAParser } from 'ua-parser-js';
 function Login() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [use2FA, setUse2FA] = useState(false);
     const [error, setError] = useState("");
+    const [waitingForApproval, setWaitingForApproval] = useState(false);
     const userContext = useContext(UserContext);
 
-    async function Login(e) {
+    async function LoginHandler(e) {
         e.preventDefault();
+        setError("");
+        setWaitingForApproval(false);
+
+        const use2FA = true; // 2FA je vedno vklopljen!
+
         const res = await fetch("http://localhost:3001/users/login", {
             method: "POST",
             credentials: "include",
@@ -27,27 +32,49 @@ function Login() {
         });
         const data = await res.json();
         if (data._id !== undefined) {
+            setWaitingForApproval(true);
+            let confirmed = false;
+            let attempts = 0;
+            while (!confirmed && attempts < 60) { // max 2 minuti
+                await new Promise(r => setTimeout(r, 2000));
+                const res = await fetch("http://localhost:3001/users/check-login-confirmed", {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username })
+                });
+                const checkData = await res.json();
+                if (checkData.confirmed) {
+                    confirmed = true;
+                    break;
+                }
+                attempts++;
+            }
+            setWaitingForApproval(false);
+            if (!confirmed) {
+                setError("Login ni bil potrjen na telefonu.");
+                return;
+            }
             userContext.setUserContext(data);
 
             // --- MQTT publish ---
             const client = mqtt.connect(MQTT_BROKER);
             client.on('connect', () => {
-            const parser = new UAParser();
-            const uaResult = parser.getResult();
-            const deviceData = {
-                loginTime: new Date().toISOString(),
-                device: {
-                    brand: uaResult.device.vendor || 'Unknown',
-                    modelName: uaResult.device.model || 'Unknown',
-                    osName: uaResult.os.name || 'Unknown',
-                    osVersion: uaResult.os.version || 'Unknown',
-                    manufacturer: uaResult.device.vendor || 'Unknown',
-                },
-            };
-            client.publish('statistics/login', JSON.stringify(deviceData), () => {
-                client.end();
+                const parser = new UAParser();
+                const uaResult = parser.getResult();
+                const deviceData = {
+                    loginTime: new Date().toISOString(),
+                    device: {
+                        brand: uaResult.device.vendor || 'Unknown',
+                        modelName: uaResult.device.model || 'Unknown',
+                        osName: uaResult.os.name || 'Unknown',
+                        osVersion: uaResult.os.version || 'Unknown',
+                        manufacturer: uaResult.device.vendor || 'Unknown',
+                    },
+                };
+                client.publish('statistics/login', JSON.stringify(deviceData), () => {
+                    client.end();
+                });
             });
-        });
         } else {
             setUsername("");
             setPassword("");
@@ -55,25 +82,23 @@ function Login() {
         }
     }
 
+    if (userContext.user) {
+        return <Navigate replace to="/" />;
+    }
+
     return (
-        <form onSubmit={Login}>
-            {userContext.user ? <Navigate replace to="/" /> : ""}
+        <form onSubmit={LoginHandler}>
             <input type="text" name="username" placeholder="Username"
                 value={username} onChange={(e) => (setUsername(e.target.value))} />
             <input type="password" name="password" placeholder="Password"
                 value={password} onChange={(e) => (setPassword(e.target.value))} />
-            <label htmlFor="use2FA" class="container2FA">
-                <input
-                    type="checkbox"
-                    id="use2FA"
-                    checked={use2FA}
-                    onChange={(e) => setUse2FA(e.target.checked)}
-                />
-                Use 2FA for this login
-                <span class="checkmark"></span>
-            </label>
-            <input type="submit" name="submit" value="Log in" />
+            <input type="submit" name="submit" value="Log in" disabled={waitingForApproval} />
             <label style={{color: 'red'}}>{error}</label>
+            {waitingForApproval && (
+                <div style={{ color: 'blue', marginTop: 10 }}>
+                    Waiting for approval on your device...
+                </div>
+            )}
         </form>
     );
 }
