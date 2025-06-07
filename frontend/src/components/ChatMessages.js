@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import { UserContext } from "../userContext";
 import '../styles/Messages.css';
+import { ThemeContext } from "../themeContext";
 
 const socket = io('http://localhost:3001'); // Poveži se s strežnikom
 
@@ -15,6 +16,9 @@ function ChatMessages() {
     const messagesEndRef = useRef(null); // Ref za auto-scroll
 
     const { user } = useContext(UserContext);
+
+    const { theme } = useContext(ThemeContext);
+    const isLight = theme === "light";
 
     useEffect(() => {
         // Pridruži se chatu
@@ -134,7 +138,14 @@ function ChatMessages() {
                         e.target.style.height = e.target.scrollHeight + 'px';
                     }}
                 />
-                <button type="submit">Send</button>
+                <button type="submit" className="send-btn">
+                    <img
+                        src="/Send.svg"
+                        alt="Send"
+                        className={isLight ? "send-icon invert" : "send-icon"}
+                    />
+                    Send
+                </button>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>

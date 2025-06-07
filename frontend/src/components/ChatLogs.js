@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import '../styles/Messages.css'
+import { ThemeContext } from "../themeContext";
 
 
 
@@ -10,6 +11,9 @@ function ChatLogs() {
     const [newChatUsername, setNewChatUsername] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate(); // Hook za navigacijo
+
+    const { theme } = useContext(ThemeContext);
+    const isLight = theme === "light";
 
     useEffect(() => {
         async function fetchChatLogs() {
@@ -76,7 +80,14 @@ function ChatLogs() {
                     required
                 />
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit">Add</button>
+                <button type="submit" className="add_chat_btn">
+                    <img
+                        src="/Add-Chat.svg"
+                        alt="Add Chat"
+                        className={isLight ? "add_chat-icon invert" : "add_chat-icon"}
+                    />
+                    Add Chat
+                </button>
             </form>
 
             <br />
@@ -87,7 +98,10 @@ function ChatLogs() {
                 <ul className="chats">
                     {chatLogs.map(chat => (
                         <li className="chat" key={chat._id}>
-                            <button className="chat_btn" onClick={() => navigate(`/messages/${chat._id}`)}>{chat.name}</button>
+                            <button className="chat_btn" onClick={() => navigate(`/messages/${chat._id}`)}>
+                                <img src='/Chat.svg' alt="chat icon" className="chat_icon" />
+                                {chat.name}
+                            </button>
                         </li>
                     ))}
                 </ul>

@@ -10,3 +10,13 @@
         height: 15vw;
         width: 15vw;
     }
+
+    .profile button img {
+        width: 1rem;
+        height: 1rem;
+        margin: 0 .75rem .35rem 0;
+    }
+
+    .edit-icon.invert {
+        filter: invert(1);
+    }

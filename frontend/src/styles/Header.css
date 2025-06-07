@@ -17,12 +17,21 @@
 }
 
 .header-left-gap {
-    padding-left: 2rem;
+    padding-left: 3.3rem;
     justify-content: flex-start;
-    gap: 3rem;
+    gap: 5.5rem;
 }
 
+    .header-left-gap .switch {
+        margin-left: auto;
+        margin-right: 2.8rem;
+    }
+
 .header-container a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     font-size: 1.5rem;
     text-decoration: none;
     color: var(--color-text-accent);
@@ -38,6 +47,93 @@
             text-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-text-accent);
         }
 
-.theme_btn{
-    margin: 0;
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    margin: auto 0;
+    width: 6rem;
+    height: 3rem;
+}
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-background-primary);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 2.5rem;
+        width: 2.5rem;
+        left: 0.2rem;
+        bottom: 0.2rem;
+        background-color: var(--color-background-terciary);
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(3rem);
+    -ms-transform: translateX(3rem);
+    transform: translateX(3rem);
+}
+
+/* Rounded sliders */
+.slider {
+    border-radius: 100vh;
+}
+
+    .slider:before {
+        border-radius: 50%;
+    }
+
+.slider-img {
+    position: absolute;
+    left: 0.4rem;
+    bottom: 0.4rem;
+    height: 2.1rem;
+    width: 2.1rem;
+    transition: transform 0.4s;
+}
+
+.slider-img-checked {
+    transform: translateX(3rem);
+}
+
+
+
+a img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.header-container a:hover img {
+    filter: drop-shadow(0 0 var(--dimen-box-shadow-blur) var(--color-text-accent));
+    transition: filter 0.3s;
+}
+
+#mqtt-icon {
+    width: 4rem;
+    height: 4rem;
+}
+
+#friends-icon {
+    width: 2.05rem;
+    height: 2.05rem;
 }

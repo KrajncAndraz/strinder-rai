@@ -60,7 +60,7 @@ input, textarea {
         color: var(--color-text-primary);
         border: none;
         border-radius: var(--dimen-border-radius);
-        padding: 0.5rem;
+        padding: 0.75rem;
         margin-top: 1rem;
         transition: background-color 0.75s;
     }
@@ -71,7 +71,6 @@ input, textarea {
             border: none;
             border-radius: var(--dimen-border-radius);
             box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accent-hover);
-            padding: 0.5rem;
         }
 
 .centered {

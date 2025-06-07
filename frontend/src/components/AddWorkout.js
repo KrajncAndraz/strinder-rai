@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ThemeContext } from "../themeContext";
 
 function AddWorkout() {
     const [name, setName] = useState('');
@@ -8,6 +9,9 @@ function AddWorkout() {
     const [error, setError] = useState('');
     const [workouts, setWorkouts] = useState([]);
     const navigate = useNavigate(); // Za preusmeritev na drugo stran
+
+    const { theme } = useContext(ThemeContext);
+    const isLight = theme === "light";
 
     // Pridobi vse workoute ob nalaganju komponente
     useEffect(() => {
@@ -91,7 +95,14 @@ function AddWorkout() {
                 />
                 {message && <p style={{ color: 'green' }}>{message}</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit">Add Workout</button>
+                <button type="submit" className="add_workout_btn">
+                    <img
+                        src="/Add-Workout.svg"
+                        alt="Add Workout"
+                        className={isLight ? "add_workout-icon invert" : "add_workout-icon"}
+                    />
+                    Add Workout
+                </button>
             </form>
 
             <h2>Workout list</h2>
@@ -109,6 +120,11 @@ function AddWorkout() {
                                 <strong>Start time:</strong> {new Date(workout.startTime).toLocaleString()}
                             </p>
                             <button onClick={() => navigate(`/workouts/view/${workout._id}`)}>
+                                <img
+                                    src="/Inspect.svg"
+                                    alt="Inspect"
+                                    className={isLight ? "inspect-icon invert" : "inspect-icon"}
+                                />
                                 Inspect Workout
                             </button>
                         </li>

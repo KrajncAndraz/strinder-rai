@@ -10,6 +10,11 @@
 }
 
 .chat_btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3rem;
+    padding: 2.5rem 2rem;
     width: 100%;
     height: 4rem;
     font-size: 1.5rem;
@@ -20,12 +25,46 @@
 }
 
     .chat_btn:hover {
+        padding: 2.5rem 2rem;
         border-left: var(--dimen-border-width) solid var(--color-background-accent);
         border-bottom: var(--dimen-border-width) solid var(--color-background-accent);
         background-color: var(--color-background-secondary);
         box-shadow: 0 0.5rem 1rem 0 var(--color-background-terciary);
         transform: scale(1.01);
     }
+
+.chat_icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+.add_chat_btn {
+    padding-bottom: .35rem;
+}
+
+.add_chat_btn img {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 0.75rem .5rem 0;
+}
+
+.add_chat-icon.invert {
+    filter: invert(1);
+}
+
+.send-btn {
+    padding-bottom: .4rem;
+}
+
+    .send-btn img {
+        width: 1.5rem;
+        height: 1.5rem;
+        margin: 0 1rem .5rem 0;
+    }
+
+.send-icon.invert {
+    filter: invert(1);
+}
 
 .messages-container {
     display: flex;

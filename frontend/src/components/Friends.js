@@ -1,7 +1,8 @@
-import { useContext, useState, useEffect } from 'react';
+﻿import { useContext, useState, useEffect } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { UserContext } from '../userContext';
 import '../styles/Friends.css';
+import { ThemeContext } from "../themeContext";
 
 function Friends(props) {
     const userContext = useContext(UserContext);
@@ -13,6 +14,9 @@ function Friends(props) {
     const [requestSent, setRequestSent] = useState(false);
 
     const [requests, setRequests] = useState([]);
+
+    const { theme } = useContext(ThemeContext);
+    const isLight = theme === "light";
 
     useEffect(() => {
         async function fetchFriends() {
@@ -164,11 +168,14 @@ function Friends(props) {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <input
-                    type="submit"
-                    name="submit"
-                    value="Send Friend Request"
-                />
+                <button type="submit" name="submit" className="add-friend-btn">
+                    <img
+                        src="/Add-Friend.svg"
+                        alt="Add Friend"
+                        className={isLight ? "add_friend-icon invert" : "add_friend-icon"}
+                    />
+                    Send Friend Request
+                </button>
             </form>
 
             <br />
@@ -184,10 +191,10 @@ function Friends(props) {
                             </p>
                             <div className="request-actions">
                                 <button id="accept" onClick={() => acceptRequest(request._id)}>
-                                    Accept
+                                    <span className="check"></span> Accept
                                 </button>
                                 <button id="reject" onClick={() => declineRequest(request._id)}>
-                                    Reject
+                                    <span className="cross"></span> Reject
                                 </button>
                             </div>
                         </li>
@@ -209,7 +216,14 @@ function Friends(props) {
                                     ? friend.friend2.username
                                     : friend.friend1.username}
                             </p>
-                            <button onClick={() => handleMessage(friend)}>Message</button>
+                            <button onClick={() => handleMessage(friend)}>
+                                <img
+                                    src="/Message.svg"
+                                    alt="Message"
+                                    className={isLight ? "message-icon invert" : "message-icon"}
+                                />
+                                Message
+                            </button>
                         </li>
                     ))}
                 </ul>
