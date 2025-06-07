@@ -14,21 +14,82 @@ function Header(props) {
     return (
         <header>
             <div className={`header-container ${isLoggedIn ? "header-space-around" : "header-left-gap"}`}>
-                <Link to='/'>Home</Link>
+                <Link to='/'>
+                    <img
+                        src="/Home.svg"
+                        alt="Home"
+                    />
+                    Home
+                </Link>
                 {isLoggedIn ? (
                     <>
-                        <Link to='/profile'>Profile</Link>
-                        <Link to='/friends'>Friends</Link>
-                        <Link to='/chatlogs'>Chats</Link>
-                        <Link to='/workouts'>Workouts</Link>
-                        <Link to='/mqtt'>Mqtt</Link>
-                        <Link to='/statistics'>Statistics</Link>
-                        <Link to='/logout'>Logout</Link>
+                        <Link to='/profile'>
+                            <img
+                                src="/Profile-Default.svg"
+                                alt="Profile"
+                            />
+                            Profile
+                        </Link>
+                        <Link to='/friends'>
+                            <img
+                                src="/Friends.svg"
+                                alt="Friends"
+                                id="friends-icon"
+                            />
+                            Friends
+                        </Link>
+                        <Link to='/chatlogs'>
+                            <img
+                                src="/Chat.svg"
+                                alt="Chat"
+                            />
+                            Chats
+                        </Link>
+                        <Link to='/workouts'>
+                            <img
+                                src="/Workout.svg"
+                                alt="Workout"
+                            />
+                            Workouts
+                        </Link>
+                        <Link to='/mqtt'>
+                            <img
+                                src="/MQTT.svg"
+                                alt="MQTT"
+                                id="mqtt-icon"
+                            />
+                        </Link>
+                        <Link to='/statistics'>
+                            <img
+                                src="/Statistics.svg"
+                                alt="Statistics"
+                            />
+                            Statistics
+                        </Link>
+                        <Link to='/logout'>
+                            <img
+                                src="/Logout.svg"
+                                alt="Logout"
+                            />
+                            Logout
+                        </Link>
                     </>
                 ) : (
                     <>
-                        <Link to='/login'>Login</Link>
-                        <Link to='/register'>Register</Link>
+                            <Link to='/login'>
+                                <img
+                                    src="/Login.svg"
+                                    alt="Login"
+                                />
+                                Login
+                            </Link>
+                            <Link to='/register'>
+                                <img
+                                    src="/Register.svg"
+                                    alt="Register"
+                                />
+                                Register
+                            </Link>
                     </>
                 )}
                 <label class="switch">
