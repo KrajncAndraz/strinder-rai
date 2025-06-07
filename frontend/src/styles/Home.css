@@ -23,7 +23,7 @@ h1 {
     box-shadow: var(--dimen-box-shadow);
 }
 
-img {
+.home-container img {
     height: 50vh;
     border-radius: var(--dimen-border-radius);
 }

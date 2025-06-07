@@ -2,7 +2,8 @@ const mqtt = require('mqtt');
 const Workout = require('../models/workoutModel'); 
 const Statistics = require('../models/statisticsModel');
 
-const MQTT_BROKER = 'mqtt://172.20.10.2:1883'; 
+// const MQTT_BROKER = 'mqtt://172.20.10.2:1883';
+const MQTT_BROKER = 'mqtt://http://localhost:1883'; 
 
 const client = mqtt.connect(MQTT_BROKER);
 
