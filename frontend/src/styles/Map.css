@@ -34,6 +34,26 @@
     filter: invert(1);
 }
 
+.add_workout_btn img {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.75rem .2rem 0;
+}
+
+.add_workout-icon.invert {
+    filter: invert(1);
+}
+
+.delete-btn img {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0 0.75rem .2rem 0;
+}
+
+.delete-icon.invert {
+    filter: invert(1);
+}
+
 .workout_description {
     padding: 1.5rem 2rem;
     margin: 1.5rem 0;

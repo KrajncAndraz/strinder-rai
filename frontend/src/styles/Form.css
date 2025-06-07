@@ -71,7 +71,6 @@ input, textarea {
             border: none;
             border-radius: var(--dimen-border-radius);
             box-shadow: 0 0 var(--dimen-box-shadow-blur) var(--color-background-accent-hover);
-            padding: 0.5rem;
         }
 
 .centered {

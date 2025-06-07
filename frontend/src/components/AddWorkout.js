@@ -95,7 +95,14 @@ function AddWorkout() {
                 />
                 {message && <p style={{ color: 'green' }}>{message}</p>}
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                <button type="submit">Add Workout</button>
+                <button type="submit" className="add_workout_btn">
+                    <img
+                        src="/Add-Workout.svg"
+                        alt="Add Workout"
+                        className={isLight ? "add_workout-icon invert" : "add_workout-icon"}
+                    />
+                    Add Workout
+                </button>
             </form>
 
             <h2>Workout list</h2>
@@ -114,7 +121,7 @@ function AddWorkout() {
                             </p>
                             <button onClick={() => navigate(`/workouts/view/${workout._id}`)}>
                                 <img
-                                    src="/Inspect.png"
+                                    src="/Inspect.svg"
                                     alt="Inspect"
                                     className={isLight ? "inspect-icon invert" : "inspect-icon"}
                                 />

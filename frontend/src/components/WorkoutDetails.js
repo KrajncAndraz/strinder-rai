@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import WorkoutMap from './WorkoutMap';
+import { ThemeContext } from "../themeContext";
 
 function WorkoutDetails() {
     const { workoutId } = useParams(); //geta ID workouta iz url-ja
@@ -8,6 +9,9 @@ function WorkoutDetails() {
     const [error, setError] = useState('');
     const [lat, setLat] = useState('');
     const [long, setLong] = useState('');
+
+    const { theme } = useContext(ThemeContext);
+    const isLight = theme === "light";
 
     useEffect(() => {
         async function fetchWorkout() {
@@ -152,7 +156,14 @@ function WorkoutDetails() {
                             <p>
                                 <strong>Time:</strong> {new Date(tracker.pingTime).toLocaleString()}
                             </p>
-                            <button onClick={() => handleDeleteTracker(tracker._id)}>Delete</button>
+                            <button onClick={() => handleDeleteTracker(tracker._id)} className="delete-btn">
+                                <img
+                                    src="/Delete.svg"
+                                    alt="Delete"
+                                    className={isLight ? "delete-icon invert" : "delete-icon"}
+                                />
+                                Delete
+                            </button>
                         </li>
                     ))}
                 </ul>

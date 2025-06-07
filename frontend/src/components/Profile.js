@@ -30,7 +30,7 @@ function Profile(){
                 <p>{profile.email}</p>
                 <button>
                     <img
-                        src="Edit.png"
+                        src="Edit.svg"
                         alt="Edit"
                         className={isLight ? "edit-icon invert" : "edit-icon"}
                     />

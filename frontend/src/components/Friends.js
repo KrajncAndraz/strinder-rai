@@ -168,8 +168,7 @@ function Friends(props) {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <button type="submit" name="submit" className="add-friend-btn"
-                >
+                <button type="submit" name="submit" className="add-friend-btn">
                     <img
                         src="/Add-Friend.svg"
                         alt="Add Friend"
@@ -219,7 +218,7 @@ function Friends(props) {
                             </p>
                             <button onClick={() => handleMessage(friend)}>
                                 <img
-                                    src="/Message.png"
+                                    src="/Message.svg"
                                     alt="Message"
                                     className={isLight ? "message-icon invert" : "message-icon"}
                                 />
