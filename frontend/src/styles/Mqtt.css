@@ -2,7 +2,7 @@
 	background-color: var(--color-background-secondary);
 	border-radius: var(--dimen-border-radius);
 	padding: 1rem;
-	border-left: 6px solid var(--color-background-accent);
+	border-left: var(--dimen-border-width) solid var(--color-background-accent);
 	transition: box-shadow 0.75s, transform 0.75s;
 }
 
