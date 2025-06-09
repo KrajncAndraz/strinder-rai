@@ -1,0 +1,17 @@
+version: "3"
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+  mobile:
+    build: ./mobile
+    ports:
+      - "8081:8081"
+    restart: unless-stopped

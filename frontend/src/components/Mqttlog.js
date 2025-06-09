@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import mqtt from 'mqtt';
 import '../styles/Mqtt.css'
+import { MQTT_BROKER } from '../constants/mqtt_ip'; // Assuming you have a config file for the broker URL
 
-const MQTT_BROKER = 'ws://172.20.10.2:9001';
+//const MQTT_BROKER = 'ws://172.20.10.2:9001';
 
 export default function MqttLog() {
   const [logs, setLogs] = useState([]);
@@ -10,7 +11,7 @@ export default function MqttLog() {
   const lastAliveRef = useRef({}); // { id: timestamp }
 
   useEffect(() => {
-    // Inicializiraj client ZNOTRAJ useEffect!
+
     const client = mqtt.connect(MQTT_BROKER);
 
     client.on('connect', () => {
