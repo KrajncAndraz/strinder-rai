@@ -40,6 +40,6 @@ jobs:
     - name: Build & push mobile image
       uses: docker/build-push-action@v5
       with:
-        context: ./mobile
+        context: ./mobile_app
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/strinder-mobile:latest
