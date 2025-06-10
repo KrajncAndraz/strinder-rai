@@ -4,6 +4,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { BASE_URL } from '../../constants/ip'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 export default function Verify2FAScreen() {
   const [image, setImage] = useState<string | null>(null);
@@ -51,7 +52,8 @@ export default function Verify2FAScreen() {
         body: JSON.stringify({ image }),
       });
       const data = await response.json();
-      if (response.ok) {
+      if (response.ok && data.success == true) {
+        await axios.post(`${BASE_URL}/users/confirm-login`, { userId });
         Alert.alert('2FA Success', data.message || 'Verification successful');
         router.replace('/(tabs)/profile');
       } else {
