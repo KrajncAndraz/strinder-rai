@@ -1,6 +1,6 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, usePathname } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { useEffect, useRef, useState } from 'react';
@@ -22,12 +22,14 @@ export default function RootLayout() {
   const [modalLoading, setModalLoading] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
 
+  const pathname = usePathname();
+
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
         const userStr = await AsyncStorage.getItem('user');
         const user = userStr ? JSON.parse(userStr) : null;
-        if (user && user._id) {
+        if (user && user._id && pathname !== '/setup/verify') {
           setUserId(user._id);
           const res = await axios.get(`${BASE_URL}/users/${user._id}`);
           if (res.data && res.data['2faInProgress'] && !alertVisible.current) {
@@ -41,7 +43,7 @@ export default function RootLayout() {
     }, 5000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [pathname]);
 
   if (!loaded) return null;
 
@@ -69,26 +71,18 @@ export default function RootLayout() {
             </Text>
             <View style={styles.buttonRow}>
               <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: '#4CAF50' }]}
+                style={[styles.modalButton, { backgroundColor: '#2196F3', flex: 1 }]}
                 disabled={modalLoading}
-                onPress={async () => {
-                  setModalLoading(true);
-                  if (userId) {
-                    await axios.post(`${BASE_URL}/users/confirm-login`, { userId });
-                  }
+                onPress={() => {
                   setShow2FAModal(false);
                   alertVisible.current = false;
-                  setModalLoading(false);
+                  router.push('/setup/verify');
                 }}
               >
-                {modalLoading ? (
-                  <ActivityIndicator color="#fff" />
-                ) : (
-                  <Text style={styles.buttonText}>Approve</Text>
-                )}
+                <Text style={styles.buttonText}>Verify face</Text>
               </TouchableOpacity>
               <TouchableOpacity
-                style={[styles.modalButton, { backgroundColor: '#f44336' }]}
+                style={[styles.modalButton, { backgroundColor: '#f44336', flex: 1 }]}
                 disabled={modalLoading}
                 onPress={async () => {
                   setModalLoading(true);
@@ -107,6 +101,25 @@ export default function RootLayout() {
                 )}
               </TouchableOpacity>
             </View>
+            <TouchableOpacity
+              style={[styles.modalButton, styles.approveButton]}
+              disabled={modalLoading}
+              onPress={async () => {
+                setModalLoading(true);
+                if (userId) {
+                  await axios.post(`${BASE_URL}/users/confirm-login`, { userId });
+                }
+                setShow2FAModal(false);
+                alertVisible.current = false;
+                setModalLoading(false);
+              }}
+            >
+              {modalLoading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.buttonText}>Approve</Text>
+              )}
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -151,5 +164,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#fff',
     fontWeight: 'bold'
-  }
+  },
+  approveButton: {
+  backgroundColor: '#888',
+  alignSelf: 'stretch',
+  marginHorizontal: 0,
+  marginTop: 16,
+},
 });

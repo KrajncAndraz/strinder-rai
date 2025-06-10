@@ -257,17 +257,18 @@ module.exports = {
         })
         .then(response => response.json())
         .then(data => {
-            if (data.success) {
+            if (data.success && data.success == true) {
                 UserModel.findById(userId, (err, user) => {
+                    console.log('Prejel sem:', data.success);
                     if (err || !user) return res.status(404).json({ message: 'User not found' });
                     user['2faInProgress'] = false;
                     user.save(err => {
                         if (err) return res.status(500).json({ message: 'Error saving user', error: err });
-                        return res.json({ message: '2FA verification successful', user });
+                        return res.json({ success: true, message: data.message || 'Face verification successful'});
                     });
                 });
             } else {
-                return res.status(400).json({ message: data.message || 'Face verification failed' });
+                return res.status(400).json({ success: false, message: data.message || 'Face verification failed' });
             }
         })
         .catch(err => {
