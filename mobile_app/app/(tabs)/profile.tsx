@@ -153,7 +153,12 @@ export default function Profile() {
           <Text style={styles.title}>Welcome, {user.username}!</Text>
           <Text>Email: {user.email}</Text>
           <Button title="Logout" onPress={handleLogout} />
-          <Button title="Check 2FA" onPress={check2FAStatus} />
+          <View style={styles.statusRow}>
+            <View style={styles.greenDot} />
+            <Text style={styles.statusText}>Online</Text>
+          </View>
+          <Text style={styles.deviceLabel}>Current device:</Text>
+          <Text style={styles.deviceModel}>{ Device.brand + ' ' + Device.deviceName || 'Unknown device'}</Text>
         </View>
       )}
     </ScrollView>
@@ -183,5 +188,35 @@ const styles = StyleSheet.create({
   },
   profile: {
     alignItems: 'center',
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 18,
+  },
+  greenDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    backgroundColor: '#34c759',
+    marginRight: 8,
+  },
+  statusText: {
+    fontSize: 16,
+    color: '#34c759',
+    fontWeight: 'bold',
+  },
+  deviceLabel: {
+    marginTop: 24,
+    fontSize: 15,
+    color: '#888',
+    fontWeight: 'bold',
+  },
+  deviceModel: {
+    fontSize: 16,
+    color: '#333',
+    marginTop: 4,
+    marginBottom: 8,
+    textAlign: 'center',
   },
 });

@@ -3,12 +3,13 @@ import { View, Text, StyleSheet, TouchableOpacity, Button, Alert } from 'react-n
 import { BASE_URL } from '../../constants/ip';
 import { useRouter } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Image } from 'react-native'
 
 const workoutTypes = [
   { label: 'Run', value: 'run' },
   { label: 'Walk', value: 'walk' },
   { label: 'Bike', value: 'bike' },
-  { label: 'Fitness', value: 'fitness' },
+  { label: 'Other', value: 'other' },
 ];
 
 export default function WorkoutScreen() {
@@ -79,25 +80,41 @@ export default function WorkoutScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Select Workout Type</Text>
-      <View style={styles.typeContainer}>
-        {workoutTypes.map((type) => (
-          <TouchableOpacity
-            key={type.value}
-            style={[
-              styles.typeButton,
-              selectedType === type.value && styles.selectedTypeButton,
-            ]}
-            onPress={() => setSelectedType(type.value)}
-          >
-            <Text
+      <View style={styles.typeGrid}>
+        {workoutTypes.map((type, idx) => (
+          <View key={type.value} style={styles.typeWrapper}>
+            <TouchableOpacity
               style={[
-                styles.typeButtonText,
-                selectedType === type.value && styles.selectedTypeButtonText,
+                styles.typeButton,
+                selectedType === type.value && styles.selectedTypeButton,
               ]}
+              onPress={() => setSelectedType(type.value)}
             >
-              {type.label}
-            </Text>
-          </TouchableOpacity>
+              {type.value !== 'other' && (
+                <Image
+                  source={
+                    type.value === 'run'
+                      ? require('../../assets/images/run1.png')
+                      : type.value === 'walk'
+                      ? require('../../assets/images/walk1.png')
+                      : type.value === 'bike'
+                      ? require('../../assets/images/bike1.png')
+                      : undefined
+                  }
+                  style={styles.icon}
+                  resizeMode="contain"
+                />
+              )}
+              <Text
+                style={[
+                  styles.typeButtonText,
+                  selectedType === type.value && styles.selectedTypeButtonText,
+                ]}
+              >
+                {type.label}
+              </Text>
+            </TouchableOpacity>
+          </View>
         ))}
       </View>
       <Button
@@ -114,18 +131,39 @@ const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24, backgroundColor: '#fff' },
   title: { fontSize: 24, marginBottom: 24 },
   typeContainer: { flexDirection: 'row', marginBottom: 32 },
+  typeGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 32,
+  },
+  typeWrapper: {
+    width: '47%',
+    marginVertical: 8,
+    alignItems: 'center',
+  },
   typeButton: {
-    padding: 16,
-    marginHorizontal: 8,
-    borderRadius: 8,
+    width: '100%',
+    minHeight: 120,
+    padding: 18,
+    borderRadius: 14,
     backgroundColor: '#eee',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 2,
   },
   selectedTypeButton: {
     backgroundColor: '#0a7ea4',
   },
+  icon: {
+    width: 38,
+    height: 38,
+    marginBottom: 10,
+  },
   typeButtonText: {
-    fontSize: 18,
+    fontSize: 20,
     color: '#333',
+    textAlign: 'center',
   },
   selectedTypeButtonText: {
     color: '#fff',
